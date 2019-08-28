@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>myproject-parent</artifactId>
+        <groupId>com.myproject</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>myproject-console</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <start-class>com.myproject.console.MyprojectConsoleApplication</start-class>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.myproject</groupId>
+            <artifactId>myproject-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.myproject.console.MyprojectConsoleApplication</mainClass>
+                    <layout>JAR</layout>
+                    <!--构建完整可执行程序，可以直接运行-->
+                    <executable>true</executable>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>0.9.8</version>
+                <!--加了这段代码，构建命令 使用mvn package 否则 使用mvn compile jib:dockerBuild -->
+                <!--<executions>-->
+                <!--<execution>-->
+                <!--<phase>package</phase>-->
+                <!--<goals>-->
+                <!--<goal>dockerBuild</goal>-->
+                <!--</goals>-->
+                <!--</execution>-->
+                <!--</executions>-->
+                <!--加了这段代码，构建命令 使用mvn package 否则 使用mvn compile jib:dockerBuild -->
+                <configuration>
+                    <!--
+                    from 如果使用aliyun的registry.cn-hangzhou.aliyuncs.com进行加速，需要在mvn配置文件setting.xml添加下面配置
+                    <servers>
+                        <server>
+                          <id>registry.cn-hangzhou.aliyuncs.com</id>
+                          <username>你的阿里云账号</username>
+                          <password>你的阿里云密码</password>
+                        </server>
+                    </servers>
+                    -->
+                    <from>
+                        <image>openjdk:8-jre-alpine</image>
+                    </from>
+                    <!--构建的images 名字 和 tag(自定义)-->
+                    <to>
+                        <image>${profileActive}/${project.artifactId}:${project.version}</image>
+                    </to>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

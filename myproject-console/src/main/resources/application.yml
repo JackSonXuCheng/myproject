@@ -1,0 +1,41 @@
+server:
+  port: 8090
+spring:
+  profiles:
+    active: '@profileActive@'
+  application:
+    name: myproject-console
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    property-naming-strategy: LOWER_CAMEL_CASE
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+
+mybatis:
+    type-aliases-package: com.pojo
+    mapper-locations: classpath:/mybatis/*.xml,classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/common/*.xml
+    configuration:
+    #下划线的表字段映射为驼峰格式的实体类属性
+      map-underscore-to-camel-case: true
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    table:
+      auto: update #update、none
+    model:
+      pack: ${mybatis.type-aliases-package}
+
+#TkMapper地址
+mapper:
+  mappers:
+    - tk.mybatis.mapper.common.Mapper
+  not-empty: false
+  identity: MYSQL
+#分页助手
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
