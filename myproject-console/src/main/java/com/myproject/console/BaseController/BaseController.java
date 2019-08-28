@@ -1,7 +1,9 @@
 package com.myproject.console.BaseController;
 
+import com.myproject.common.Base.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author jackson
@@ -9,11 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @date 2019/8/28 17:09
  */
 @Controller
-public class BaseController<T> {
+public class BaseController {
 
-    @GetMapping
-    public Object hello() {
-        return "hello";
+    @GetMapping("hello")
+    @ResponseBody
+    public Result hello() {
+        return Result.success(true, "成功");
     }
 
 
