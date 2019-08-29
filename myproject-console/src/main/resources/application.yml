@@ -16,7 +16,7 @@ spring:
 
 
 mybatis:
-    type-aliases-package: com.pojo
+    type-aliases-package: com.myproject.pojo.po
     mapper-locations: classpath:/mybatis/*.xml,classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/common/*.xml
     configuration:
     #下划线的表字段映射为驼峰格式的实体类属性

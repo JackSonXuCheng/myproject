@@ -1,7 +1,7 @@
-package com.base;
+package com.myproject.base;
 
 import com.github.pagehelper.PageInfo;
-import com.pojo.base.PageVO;
+import com.myproject.pojo.base.PageVO;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
@@ -16,6 +16,7 @@ import java.util.Map;
 public interface BaseService<T> {
     /**
      * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
+     *
      * @param key
      * @return
      */
@@ -23,6 +24,7 @@ public interface BaseService<T> {
 
     /**
      * 保存一个实体，null的属性也会保存，不会使用数据库默认值
+     *
      * @param entity
      * @return
      */
@@ -30,6 +32,7 @@ public interface BaseService<T> {
 
     /**
      * 根据主键字段进行删除，方法参数必须包含完整的主键属性
+     *
      * @param key
      * @return
      */
@@ -37,6 +40,7 @@ public interface BaseService<T> {
 
     /**
      * 根据主键字段进行删除，方法参数必须包含完整的主键属性
+     *
      * @param keys
      * @return
      */
@@ -44,6 +48,7 @@ public interface BaseService<T> {
 
     /**
      * 根据实体属性作为条件进行删除，查询条件使用等号
+     *
      * @param entity
      * @return
      */
@@ -51,6 +56,7 @@ public interface BaseService<T> {
 
     /**
      * 根据主键更新实体全部字段，null值会被更新
+     *
      * @param entity
      * @return
      */
@@ -58,6 +64,7 @@ public interface BaseService<T> {
 
     /**
      * 根据主键更新属性不为null的值
+     *
      * @param entity
      * @return
      */
@@ -65,6 +72,7 @@ public interface BaseService<T> {
 
     /**
      * 根据Example条件进行查询
+     *
      * @param example
      * @return
      */
@@ -72,19 +80,22 @@ public interface BaseService<T> {
 
     /**
      * 查询全部结果，select(null)方法能达到同样的效果
+     *
      * @return
      */
     List<T> selectAll();
 
     /**
      * 根据实体中的属性值进行查询，查询条件使用等号
+     *
      * @param entity
      * @return
      */
     List<T> selectByEntity(T entity);
 
     /**
-     *  根据实体中的属性值进行查询，查询条件使用等号，降序
+     * 根据实体中的属性值进行查询，查询条件使用等号，降序
+     *
      * @param entity
      * @param columnName 列名
      * @return
@@ -93,6 +104,7 @@ public interface BaseService<T> {
 
     /**
      * * 根据实体中的属性值进行查询，查询条件使用等号，升序
+     *
      * @param entity
      * @param columnName 列名
      * @return
@@ -101,6 +113,7 @@ public interface BaseService<T> {
 
     /**
      * 保存或者更新，如果数据不存在就保存，存在就更新
+     *
      * @param entity
      * @return
      */
@@ -108,6 +121,7 @@ public interface BaseService<T> {
 
     /**
      * 根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号
+     *
      * @param entity
      * @return
      */
@@ -115,6 +129,7 @@ public interface BaseService<T> {
 
     /**
      * 分页查询
+     *
      * @param pageVO
      * @return
      */
@@ -123,6 +138,7 @@ public interface BaseService<T> {
 
     /**
      * 忽略某些属性更新
+     *
      * @param entity
      * @param properties
      * @return
@@ -140,13 +156,16 @@ public interface BaseService<T> {
 
     /**
      * 模糊查询
+     *
      * @param entity
      * @return
      */
     List<T> selectByEntityByLike(T entity, Map<String, Object> properties);
 
 
-    /**模糊分页查询
+    /**
+     * 模糊分页查询
+     *
      * @param pageVO
      * @param entity
      * @return
@@ -156,17 +175,21 @@ public interface BaseService<T> {
 
     /**
      * 模糊时间范围查询
+     *
      * @param entity
      * @return
      */
-    List<T> selectByEntityByLike(T entity, Map<String, Object> properties, Date begin,Date end);
+    List<T> selectByEntityByLike(T entity, Map<String, Object> properties, Date begin, Date end);
 
 
-    /**模糊分页时间范围查询
+    /**
+     * 模糊分页时间范围查询
+     *
      * @param pageVO
      * @param entity
      * @return
      */
-    PageInfo queryByPageByLike(PageVO pageVO, T entity, Map<String, Object> properties,Date begin,Date end);
+    PageInfo queryByPageByLike(PageVO pageVO, T entity, Map<String, Object> properties, Date begin, Date end);
+
 
 }

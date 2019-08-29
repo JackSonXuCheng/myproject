@@ -1,10 +1,10 @@
-package com.base.impl;
+package com.myproject.base.impl;
 
-import com.base.BaseService;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.pojo.base.PageVO;
+import com.myproject.base.BaseService;
+import com.myproject.pojo.base.PageVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +25,11 @@ import java.util.Map;
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired
-    private Mapper<T> mapper;
+    protected Mapper<T> mapper;
+
 
     @Override
     public T selectByKey(Object key) {
-
         return mapper.selectByPrimaryKey(key);
     }
 
@@ -50,7 +50,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     public int delete(Object... keys) {
         int resultTotal = 0;
         for (Object key : keys) {
-            resultTotal+= mapper.deleteByPrimaryKey(key);
+            resultTotal += mapper.deleteByPrimaryKey(key);
         }
         return resultTotal;
     }
@@ -87,24 +87,24 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public List<T> selectByEntityOrderBy(T entity, String... columnName) {
-        return this.selectByEntityOrderBy(entity,true,columnName);
+        return this.selectByEntityOrderBy(entity, true, columnName);
     }
 
     @Override
     public List<T> selectByEntityOrderByDesc(T entity, String... columnName) {
-        return this.selectByEntityOrderBy(entity,false,columnName);
+        return this.selectByEntityOrderBy(entity, false, columnName);
     }
 
-    private List<T> selectByEntityOrderBy(T entity,Boolean isAsc,String... columnName){
-        if (columnName.length==0||columnName==null){
-            return selectByEntityOrderBy(entity,"id");
+    private List<T> selectByEntityOrderBy(T entity, Boolean isAsc, String... columnName) {
+        if (columnName.length == 0 || columnName == null) {
+            return selectByEntityOrderBy(entity, "id");
         }
-        if (entity!=null){
+        if (entity != null) {
             Example example = new Example(entity.getClass());
             String columnNames = String.join(",", columnName);
-            if (isAsc){
+            if (isAsc) {
                 example.setOrderByClause(columnNames);
-            }else {
+            } else {
                 example.setOrderByClause(columnNames + "DESC");
             }
             Example.Criteria criteria = example.createCriteria();
@@ -115,9 +115,9 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
                 //获取此字段的值
                 try {
                     Object o = field.get(entity);
-                    if (o!=null&&o.getClass().isAnnotationPresent(Column.class)){
+                    if (o != null && o.getClass().isAnnotationPresent(Column.class)) {
                         Column column = o.getClass().getAnnotation(Column.class);
-                        criteria.andEqualTo(column.name(),o);
+                        criteria.andEqualTo(column.name(), o);
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -136,24 +136,25 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     public T saveOrUpdate(T entity) {
         Object id = getIdFiledValue(entity);
         T t;
-        if (id!=null){
-             t= selectByKey(id);
-            if (t!=null){
+        if (id != null) {
+            t = selectByKey(id);
+            if (t != null) {
                 this.updateByKey(entity);
-            }else{
+            } else {
                 this.save(entity);
             }
-        }{
+        }
+        {
             this.save(entity);
-            t=entity;
+            t = entity;
         }
         return t;
     }
 
-    private Object getIdFiledValue(Object obj){
+    private Object getIdFiledValue(Object obj) {
         Field[] declaredFields = obj.getClass().getSuperclass().getDeclaredFields();
         for (Field field : declaredFields) {
-            if (field.getAnnotation(javax.persistence.Id.class)!=null){
+            if (field.getAnnotation(javax.persistence.Id.class) != null) {
                 field.setAccessible(true);
                 try {
                     return field.get(obj);
@@ -173,10 +174,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public PageInfo queryByPage(PageVO pageVO, T entity) {
-        if (pageVO==null){
-            PageHelper.startPage(1,10,"create_date "+" "+PageVO.OrderDirection.DESC.toString());
-        }else {
-            PageHelper.startPage(pageVO.getPageNum(),pageVO.getPageSize(),pageVO.getOrderColumn()+" "+pageVO.getOrderDirection().toString());
+        if (pageVO == null) {
+            PageHelper.startPage(1, 10, "create_date " + " " + PageVO.OrderDirection.DESC.toString());
+        } else {
+            PageHelper.startPage(pageVO.getPageNum(), pageVO.getPageSize(), pageVO.getOrderColumn() + " " + pageVO
+                    .getOrderDirection().toString());
         }
         setEmptyToNull(entity);
         return new PageInfo<T>(selectByEntity(entity));
@@ -187,7 +189,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Transactional
     public T saveOrUpdateIgnore(T entity, String... properties) {
         Object key = this.getIdFiledValue(entity);
-        if(key != null){
+        if (key != null) {
             T s = this.selectByKey(key);
             T t = (T) BeanUtils.instantiateClass(entity.getClass());
             BeanUtils.copyProperties(s, t);
@@ -195,7 +197,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             this.updateByKey(t);
             return t;
 
-        }else{
+        } else {
             this.save(entity);
         }
         return entity;
@@ -203,7 +205,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public List<T> selectColumnNull(T entity, String... properties) {
-        if (properties.length==0||properties==null){
+        if (properties.length == 0 || properties == null) {
             return selectByEntity(entity);
         }
         Example example = new Example(entity.getClass());
@@ -232,6 +234,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         }
         return null;
     }
+
     @Override
     public PageInfo queryByPageByLike(PageVO pageVO, T entity, Map<String, Object> properties) {
         if (pageVO == null) {
@@ -245,15 +248,16 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     /**
      * 将String类型的字段""的值置为null
+     *
      * @param t
      */
     private void setEmptyToNull(T t) {
         Field[] fs = t.getClass().getDeclaredFields();
-        for (Field f : fs){
+        for (Field f : fs) {
             f.setAccessible(true);
             try {
                 Object o = f.get(t);
-                if (o instanceof String && ((String) o).trim().isEmpty()){
+                if (o instanceof String && ((String) o).trim().isEmpty()) {
                     f.set(t, null);
                 }
             } catch (IllegalAccessException e) {
@@ -271,7 +275,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         Example example = new Example(entity.getClass());
         Example.Criteria criteria = example.createCriteria();
         getCriteria(properties, criteria);
-        criteria.andBetween("create_date",begin,end);
+        criteria.andBetween("create_date", begin, end);
         example.setOrderByClause("id desc");
         try {
             return selectByExample(example);
@@ -282,7 +286,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
 
 
-
     @Override
     public PageInfo queryByPageByLike(PageVO pageVO, T entity, Map<String, Object> properties, Date begin, Date end) {
         if (pageVO == null) {
@@ -291,18 +294,22 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             PageHelper.startPage(pageVO.getPageNum(), pageVO.getPageSize());
         }
         setEmptyToNull(entity);
-        return new PageInfo<T>(this.selectByEntityByLike(entity, properties,begin,end));
+        return new PageInfo<T>(this.selectByEntityByLike(entity, properties, begin, end));
     }
+
 
     private void getCriteria(Map<String, Object> properties, Example.Criteria criteria) {
         for (Map.Entry<String, Object> property : properties.entrySet()) {
             Object value = property.getValue();
 
-            if (value instanceof Date){
-                criteria.andEqualTo(property.getKey(),value);
-            }else {
+            if (value instanceof Date) {
+                criteria.andEqualTo(property.getKey(), value);
+            } else {
                 criteria.andLike(property.getKey(), StringUtils.isEmpty(value) ? "%" + "" + "%" : "%" + value + "%");
             }
         }
+
     }
+
+
 }
