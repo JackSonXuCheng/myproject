@@ -1,0 +1,15 @@
+/*
+ * 
+ * [entity_name]Service
+ *
+ */
+package [package_path]service;
+
+import [package_path]base.BaseService;
+import [package_path]pojo.po.[entity_name];
+/**
+ * Service - [chinese_name]
+ */
+public interface [entity_name]Service extends BaseService<[entity_name]> {
+
+}

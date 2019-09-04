@@ -146,7 +146,7 @@ public class IpUtils {
 
     public static String getLocalIP() {
         String ip = "";
-        if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
+        if (System.getProperty("os.username").toLowerCase().startsWith("windows")) {
             InetAddress addr;
             try {
                 addr = InetAddress.getLocalHost();

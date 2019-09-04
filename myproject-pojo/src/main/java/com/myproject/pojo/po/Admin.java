@@ -22,8 +22,8 @@ public class Admin extends BasePojo implements Serializable {
     /**
      * 用户名
      */
-    @Column(name = "name", type = MySqlTypeConstant.VARCHAR)
-    private String name;
+    @Column(name = "username", type = MySqlTypeConstant.VARCHAR)
+    private String username;
 
     /**
      * 密码

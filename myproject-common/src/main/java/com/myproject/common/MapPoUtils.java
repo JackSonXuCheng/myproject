@@ -216,8 +216,8 @@ public class MapPoUtils {
 						}
 						AnnotatedType annotatedType = field.getAnnotatedType();
 						Column column = field.getAnnotation(Column.class); // 获取指定类型注解
-						String fieldName = column == null || column.name() == null || "".equals(column.name())
-								? field.getName() : column.name();
+						String fieldName = column == null || column.username() == null || "".equals(column.username())
+								? field.getName() : column.username();
 						fieldName = MyStringUtil.changeUpper2UnderLine(fieldName);
 						if (fieldName.equals(key)) {
 							field.setAccessible(true);

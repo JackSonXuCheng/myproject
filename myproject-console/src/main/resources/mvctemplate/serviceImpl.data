@@ -1,0 +1,21 @@
+/*
+ * 
+ *  [entity_name]ServiceImpl
+ * 
+ */
+package [package_path]service.impl;
+
+
+
+import com.myproject.base.impl.BaseServiceImpl;
+import [package_path]pojo.po.[entity_name];
+import [package_path]service.[entity_name]Service;
+import org.springframework.stereotype.Service;
+
+/**
+ * Service - [chinese_name]
+ */
+@Service
+public class [entity_name]ServiceImpl extends BaseServiceImpl<[entity_name]> implements [entity_name]Service {
+
+}

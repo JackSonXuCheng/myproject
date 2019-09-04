@@ -1,0 +1,17 @@
+/*
+ * 
+ *  [entity_name]Mapper
+ * 
+ */
+package [package_path]mapper;
+
+import [package_path]pojo.po.[entity_name];
+import org.apache.ibatis.annotations.Mapper;
+
+/**
+* mapper - [chinese_name]
+*/
+@Mapper
+public interface [entity_name]Mapper extends tk.mybatis.mapper.common.Mapper<[entity_name]>{
+
+}

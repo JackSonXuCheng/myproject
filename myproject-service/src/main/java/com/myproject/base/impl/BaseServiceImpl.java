@@ -8,11 +8,13 @@ import com.myproject.pojo.base.PageVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +74,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public List<T> selectByExample(Example example) {
+        List<T> list = mapper.selectByExample(example);
+        //保证返回的数组和列表不为null, 避免调用函数的空指针判断。
+        if (CollectionUtils.isEmpty(list)) {
+            return Collections.emptyList();
+        }
         return mapper.selectByExample(example);
     }
 
@@ -219,7 +226,8 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public List<T> selectByEntityByLike(T entity, Map<String, Object> properties) {
-        if (properties == null || properties.size() == 0) {
+        //CollectionUtils.isEmpty(properties) 相等 （properties == null || properties.size() == 0）
+        if (CollectionUtils.isEmpty(properties)) {
             return selectByEntityOrderByDesc(entity, "id");
         }
         Example example = new Example(entity.getClass());
@@ -269,7 +277,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public List<T> selectByEntityByLike(T entity, Map<String, Object> properties, Date begin, Date end) {
-        if (properties == null || properties.size() == 0) {
+        if (CollectionUtils.isEmpty(properties)) {
             return selectByEntityOrderByDesc(entity, "id");
         }
         Example example = new Example(entity.getClass());

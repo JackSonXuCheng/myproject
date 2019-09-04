@@ -33,20 +33,20 @@ public class MvcCodeUtil {
         mvcPathMap.put("mapper", APP_WEB + "/src/main/resources/mvctemplate/mapper.data");
         mvcPathMap.put("service", APP_WEB + "/src/main/resources/mvctemplate/service.data");
         mvcPathMap.put("service/impl", APP_WEB + "/src/main/resources/mvctemplate/serviceImpl.data");
-        mvcPathMap.put("controller", APP_WEB + "/src/main/resources/mvctemplate/control.data");
+        // mvcPathMap.put("controller", APP_WEB + "/src/main/resources/mvctemplate/control.data");
 
         mvcFileNameMap.put("mapper", "Mapper.java");
         mvcFileNameMap.put("service", "Service.java");
         mvcFileNameMap.put("service/impl", "ServiceImpl.java");
-        mvcFileNameMap.put("controller", "Controller.java");
+        // mvcFileNameMap.put("controller", "Controller.java");
 
-        webappMap.put("add", APP_WEB + "/src/main/resources/mvctemplate/webappAdd.data");
+       /* webappMap.put("add", APP_WEB + "/src/main/resources/mvctemplate/webappAdd.data");
         webappMap.put("edit", APP_WEB + "/src/main/resources/mvctemplate/webappEdit.data");
-        webappMap.put("list", APP_WEB + "/src/main/resources/mvctemplate/webappList.data");
+        webappMap.put("list", APP_WEB + "/src/main/resources/mvctemplate/webappList.data");*/
     }
 
     public static void main(String[] args) {
-        addJavaAndWebapp("LDMemberVipRecord", "ldMemberVipRecord", "联动vip升级流水");
+        addJavaAndWebapp("AdminRole", "adminRole", "用户角色");
     }
 
     public static void generateJavaFiles(String entity, String chineseName, String webappName) {
@@ -75,7 +75,7 @@ public class MvcCodeUtil {
                             .createNewFile());
                 }
                 if ("controller".equals(javaPath)) {
-                    targetFile = new File(APP_WEB + "/src/main/java/" + PACKAGE_PATH + javaPath, entity +
+                    targetFile = new File(APP_WEB + "/src/main/java/" + PACKAGE_PATH + "console/" + javaPath, entity +
                             mvcFileNameMap.get(javaPath));
                     System.out.println("创建java组建文件" + entity + mvcFileNameMap.get(javaPath) + "结果：" + targetFile
                             .createNewFile());

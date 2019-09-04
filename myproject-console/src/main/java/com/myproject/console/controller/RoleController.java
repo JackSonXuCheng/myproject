@@ -1,10 +1,15 @@
+/*
+ *
+ *  RoleController
+ *
+ */
 package com.myproject.console.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.myproject.common.Base.Result;
 import com.myproject.pojo.base.PageVO;
-import com.myproject.pojo.po.Admin;
-import com.myproject.service.AdminService;
+import com.myproject.pojo.po.Role;
+import com.myproject.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,29 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
-
 /**
- * @author jackson
- * @version 1.0
- * @date 2019/8/29 15:09
+ * Controller - 角色
  */
 @Controller
-@RequestMapping("admin")
-public class AdminController {
+@RequestMapping("/console/role")
+public class RoleController {
 
     @Autowired
-    private AdminService adminService;
-
-    @ResponseBody
-    @GetMapping("hello")
-    public Result hello() {
-        List<Admin> list = adminService.exec("select * from m_admin");
-        List<Admin> admins = adminService.selectAll();
-
-        return Result.success(list);
-    }
+    private RoleService roleService;
 
     /**
      * 列表页展示
@@ -46,11 +37,11 @@ public class AdminController {
      * @return
      */
     @GetMapping("list")
-    public String list(Admin admin, PageVO pageVO, Model model) {
-        PageInfo pageResult = adminService.queryByPage(pageVO, admin);
-        model.addAttribute("searchCdt", admin);
+    public String list(Role role, PageVO pageVO, Model model) {
+        PageInfo pageResult = roleService.queryByPage(pageVO, role);
+        model.addAttribute("searchCdt", role);
         model.addAttribute("pageResult", pageResult);
-        return "admin/list";
+        return "role/list";
     }
 
     /**
@@ -62,8 +53,8 @@ public class AdminController {
      */
     @GetMapping("edit")
     public String edit(Long id, Model model) {
-        model.addAttribute("admin", adminService.selectByKey(id));
-        return "admin/edit";
+        model.addAttribute("role", roleService.selectByKey(id));
+        return "role/edit";
     }
 
 
@@ -74,8 +65,8 @@ public class AdminController {
      * @return
      */
     @PostMapping("submit")
-    public String submit(Admin admin, RedirectAttributes attr) {
-        adminService.saveOrUpdate(admin);
+    public String submit(Role role, RedirectAttributes attr) {
+        roleService.saveOrUpdate(role);
         attr.addFlashAttribute("msg", "操作成功");
         return "redirect:list";
     }
@@ -89,7 +80,7 @@ public class AdminController {
     @PostMapping("delete")
     @ResponseBody
     public Result<String> delete(Long[] ids) {
-        adminService.delete(ids);
+        roleService.delete(ids);
         return Result.success(null, "操作成功");
     }
 }
