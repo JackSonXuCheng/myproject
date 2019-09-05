@@ -7,10 +7,9 @@ import com.myproject.service.AdminRoleService;
 import com.myproject.service.AdminService;
 import com.myproject.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -20,7 +19,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -86,7 +87,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 用户认证
-     *
      * @param authenticationToken
      * @return
      * @throws AuthenticationException
@@ -94,6 +94,18 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws
             AuthenticationException {
-        return null;
+        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        String username = token.getUsername();
+        String pwd = Arrays.toString(token.getPassword());
+        Admin admin = new Admin();
+        admin.setUsername(username);
+        admin = adminService.selectOne(admin);
+        if (Objects.isNull(admin)) {
+            throw new UnknownAccountException();
+        }
+        if (!DigestUtils.md5Hex(pwd).equals(admin.getPwd())) {
+            throw new IncorrectCredentialsException();
+        }
+        return new SimpleAuthenticationInfo(admin.getUsername(), pwd, getName());
     }
 }

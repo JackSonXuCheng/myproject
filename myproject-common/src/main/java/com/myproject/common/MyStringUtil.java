@@ -4,11 +4,19 @@
 package com.myproject.common;
 
 
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -254,7 +262,6 @@ public class MyStringUtil {
 
     /**
      * 逗号表达式_取交集
-     *
      * @param commaexpressA 逗号表达式1 A,B,C
      * @param commaexpressB 逗号表达式2 B,C,D
      * @return B, C
@@ -606,5 +613,62 @@ public class MyStringUtil {
         return nums;
     }
 
+    /**
+     * 简化参数为空的判断；
+     *
+     * @param map
+     * @param properties
+     * @return
+     */
+    public static Map getAcMap(Map map, String... properties) {
+        if (CollectionUtils.isEmpty(map)) {
+            return Collections.EMPTY_MAP;
+        }
+        Map<String, Object> stringObjectHashMap = new HashMap<>();
+        for (String property : properties) {
+            Object o = map.get(property);
+            if (!ObjectUtils.isEmpty(o)) {
+                stringObjectHashMap.put(property, o);
+            }
+        }
+        return stringObjectHashMap;
+    }
+
+
+    /**
+     * 简化参数为空的判断；
+     *
+     * @return
+     */
+    public static Map getAcMap(Object o, String... ignoreProperties) {
+        Field[] fields = o.getClass().getDeclaredFields();
+        String pro = "";
+        Map<String, Object> map = new HashMap<>();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            String name = field.getName();
+            if (ignoreProperties.length != 0) {
+                for (String ignoreProperty : ignoreProperties) {
+                    if (name.equals(ignoreProperty)) {
+                        pro = ignoreProperty;
+                    }
+                    break;
+                }
+            }
+            if (!pro.equals(name)) {
+                try {
+                    //获取参数值
+                    Object result = field.get(o);
+                    if (!Objects.isNull(result)) {
+                        map.put(name, result);
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return map;
+    }
 
 }
