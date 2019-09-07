@@ -13,7 +13,17 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 20MB
-
+  freemarker:
+      cache: false
+#      所有视图的requestContext属性的名称
+      request-context-attribute: site
+#      false是否应在与模板合并之前将所有请求属性添加到模型中
+      expose-request-attributes: true
+      settings:
+        api_builtin_enabled: true
+        object_wrapper: freemarker.ext.beans.BeansWrapper
+        number_format: 0.##
+        classic_compatible: true
 
 mybatis:
     type-aliases-package: com.myproject.pojo.po
@@ -26,7 +36,7 @@ mybatis:
       auto: update #update、none
     model:
       pack: ${mybatis.type-aliases-package}
-
+    type-handlers-package: com.myproject.config.mybatis.type
 #TkMapper地址
 mapper:
   mappers:
@@ -39,3 +49,11 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+#shiro
+shiro:
+  web:
+    enabled: true
+  loginUrl: /console/login
+  successUrl: /console/index
+  unauthorizedUrl: /console/unauthorized

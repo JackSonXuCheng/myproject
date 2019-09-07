@@ -637,10 +637,13 @@ public class MyStringUtil {
 
     /**
      * 简化参数为空的判断；
-     *
+     * 只适用于 属性名没有下划线 属性为string以及number类型
      * @return
      */
     public static Map getAcMap(Object o, String... ignoreProperties) {
+        if (Objects.isNull(o)) {
+            return Collections.EMPTY_MAP;
+        }
         Field[] fields = o.getClass().getDeclaredFields();
         String pro = "";
         Map<String, Object> map = new HashMap<>();

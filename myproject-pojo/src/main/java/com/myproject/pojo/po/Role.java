@@ -23,8 +23,8 @@ public class Role extends BasePojo implements Serializable {
     /**
      * 角色名称
      */
-    @Column(name = "username", type = MySqlTypeConstant.VARCHAR)
-    private String name;
+    @Column(name = "role_name", type = MySqlTypeConstant.VARCHAR)
+    private String roleName;
 
     /**
      * 角色描述
@@ -36,6 +36,8 @@ public class Role extends BasePojo implements Serializable {
      * 权限
      */
     @Column(name = "authorities", type = MySqlTypeConstant.TEXT)
+    /*必须要配合这个注解才能添加成功*/
+    @javax.persistence.Column(name = "authorities")
     private List<String> authorities;
 
 }

@@ -5,6 +5,8 @@ import com.myproject.common.Base.Result;
 import com.myproject.pojo.base.PageVO;
 import com.myproject.pojo.po.Admin;
 import com.myproject.service.AdminService;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,7 @@ import java.util.List;
  * @date 2019/8/29 15:09
  */
 @Controller
-@RequestMapping("admin")
+@RequestMapping("/console/admin")
 public class AdminController {
 
     @Autowired
@@ -75,7 +77,22 @@ public class AdminController {
      */
     @PostMapping("submit")
     public String submit(Admin admin, RedirectAttributes attr) {
-        adminService.saveOrUpdate(admin);
+        //判断Admin是否存在
+        if (admin.getId() != null) {
+            //编辑
+            if (StringUtils.isNotBlank(admin.getPassword())) {
+                admin.setPassword(DigestUtils.md5Hex(admin.getPassword()));
+            }
+        } else {
+            //新增
+            admin.setPassword(DigestUtils.md5Hex(admin.getPassword()));
+        }
+        Admin a;
+        if (StringUtils.isNotBlank(admin.getPassword())) {
+            a = adminService.saveOrUpdate(admin);
+        } else {
+            a = adminService.saveOrUpdateIgnore(admin, "password");
+        }
         attr.addFlashAttribute("msg", "操作成功");
         return "redirect:list";
     }

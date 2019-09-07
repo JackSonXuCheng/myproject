@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -96,14 +95,14 @@ public class ShiroRealm extends AuthorizingRealm {
             AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String username = token.getUsername();
-        String pwd = Arrays.toString(token.getPassword());
+        String pwd = new String(token.getPassword());
         Admin admin = new Admin();
         admin.setUsername(username);
         admin = adminService.selectOne(admin);
         if (Objects.isNull(admin)) {
             throw new UnknownAccountException();
         }
-        if (!DigestUtils.md5Hex(pwd).equals(admin.getPwd())) {
+        if (!DigestUtils.md5Hex(pwd).equals(admin.getPassword())) {
             throw new IncorrectCredentialsException();
         }
         return new SimpleAuthenticationInfo(admin.getUsername(), pwd, getName());
