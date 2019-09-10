@@ -1,5 +1,6 @@
 package com.myproject.config.freemarker_config;
 
+import com.jagregory.shiro.freemarker.ShiroTags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,5 +24,6 @@ public class FreemarkerConfig {
     @PostConstruct
     public void setSharedVariable() {
         configuration.setSharedVariable("testTag", testTag);
+        configuration.setSharedVariable("shiro", new ShiroTags());
     }
 }

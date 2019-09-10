@@ -14,26 +14,17 @@ import java.util.List;
  */
 public abstract class BaseTag implements TemplateMethodModelEx {
 
-    public Object exec(List arguments, FindByIdMethod baseMethod, FreemarkerMethodType freemarkerMethodType) throws
+    public Object exec(List arguments, FindByIdMethod baseMethod) throws
             TemplateModelException {
         if (CollectionUtils.isEmpty(arguments)) {
             return null;
         }
-        switch (freemarkerMethodType) {
-            case findById:
-                return baseMethod.findById(Long.valueOf(String.valueOf(arguments.get(0))));
-            case findByList:
-                break;
-        }
-        return null;
-    }
-
-
-    enum FreemarkerMethodType {
-        findById,
-        findByList;
+        return baseMethod.findById(Long.valueOf(String.valueOf(arguments.get(0))));
 
     }
+
+
+
 
     public interface FindByIdMethod {
         Object findById(Long id);

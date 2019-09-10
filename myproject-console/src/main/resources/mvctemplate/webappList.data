@@ -10,10 +10,9 @@
 <#--
     <link href="${site.contextPath}/lib/layui-v2.5.4/css/layui.css" rel="stylesheet" type="text/css"/>
 -->
-    <link href="${site.contextPath}/antdesign/css/main.css" rel="stylesheet" type="text/css" />
-    <link href="${site.contextPath}/lib/iconfont/iconfont.css" rel="stylesheet" type="text/css"/>
-    <link href="${site.contextPath}/layuiadmin/style/admin.css" rel="stylesheet" type="text/css" />
-    <link href="${site.contextPath}/css/base.css" rel="stylesheet" type="text/css" />
+   <link href="${site.contextPath}/antdesign/css/main.css" rel="stylesheet" type="text/css" />
+       <link href="${site.contextPath}/fonts/iconfont.css" rel="stylesheet" type="text/css"/>
+       <link href="${site.contextPath}/css/base.css" rel="stylesheet" type="text/css" />
     <style>
         .edit{
             color: #1890FF
@@ -119,9 +118,9 @@
 <div id="page-footer" style="padding-left: 30px;"></div>
 </#if>
 </body>
-<script src="${site.contextPath}/lib/jquery.js"></script>
-<script src="${site.contextPath}/lib/layui-v2.5.4/layui.js"></script>
-<script src="${site.contextPath}/js/console/list.js"></script>
+<script src="${site.contextPath}/js/jquery/jquery.min.js"></script>
+<script src="${site.contextPath}/layui/layui.js"></script>
+<script src="${site.contextPath}/js/common/list.js"></script>
 <script>
     $().ready( function() {
         var msg = $("#msg").val();

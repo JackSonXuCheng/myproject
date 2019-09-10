@@ -1,0 +1,39 @@
+.black {
+    color: black;
+}
+
+.white {
+    color: white;
+}
+
+.gray {
+    color: #95A5A6;
+}
+
+.red {
+    color: #E74C3C;
+}
+
+.green {
+    color: #12a358;
+}
+
+.blue {
+    color: #3498DB;
+}
+
+.orange {
+    color: #F39C12;
+}
+
+.turquoise {
+    color: #1ABC9C;
+}
+
+.purple {
+    color: #FF3399;
+}
+
+.iconfont {
+    vertical-align: middle;
+}

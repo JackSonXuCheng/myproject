@@ -79,7 +79,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         if (CollectionUtils.isEmpty(list)) {
             return Collections.emptyList();
         }
-        return mapper.selectByExample(example);
+        return list;
     }
 
     @Override
@@ -112,7 +112,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             if (isAsc) {
                 example.setOrderByClause(columnNames);
             } else {
-                example.setOrderByClause(columnNames + "DESC");
+                example.setOrderByClause(columnNames + " DESC");
             }
             Example.Criteria criteria = example.createCriteria();
             //获取此类的所有字段
@@ -228,7 +228,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     public List<T> selectByEntityByLike(T entity, Map<String, Object> properties) {
         //CollectionUtils.isEmpty(properties) 相等 （properties == null || properties.size() == 0）
         if (CollectionUtils.isEmpty(properties)) {
-            return selectByEntityOrderByDesc(entity, "id");
+            return selectByEntityOrderByDesc(entity, "id ");
         }
         Example example = new Example(entity.getClass());
         Example.Criteria criteria = example.createCriteria();

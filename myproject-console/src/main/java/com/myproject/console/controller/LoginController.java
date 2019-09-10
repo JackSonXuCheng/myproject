@@ -39,6 +39,7 @@ public class LoginController {
         } catch (DisabledAccountException e) {
             msg = "账号不可用";
         }
+        model.addAttribute("msg", msg);
         return "login";
     }
 

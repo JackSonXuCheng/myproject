@@ -2,6 +2,7 @@ package com.myproject.console.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.myproject.common.Base.Result;
+import com.myproject.common.MyStringUtil;
 import com.myproject.pojo.base.PageVO;
 import com.myproject.pojo.po.Admin;
 import com.myproject.service.AdminService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -49,7 +51,8 @@ public class AdminController {
      */
     @GetMapping("list")
     public String list(Admin admin, PageVO pageVO, Model model) {
-        PageInfo pageResult = adminService.queryByPage(pageVO, admin);
+        Map acMap = MyStringUtil.getAcMap(admin);
+        PageInfo pageResult = adminService.queryByPageByLike(pageVO, admin, acMap);
         model.addAttribute("searchCdt", admin);
         model.addAttribute("pageResult", pageResult);
         return "admin/list";

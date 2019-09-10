@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class TestTag extends BaseTag {
     @Override
     public Object exec(List arguments) throws TemplateModelException {
-        return exec(arguments, id -> arguments.stream().map(String::valueOf).collect(Collectors.joining()),
-                FreemarkerMethodType.findById);
+        return exec(arguments, id -> arguments.stream().map(String::valueOf).collect(Collectors.joining()));
     }
 }
