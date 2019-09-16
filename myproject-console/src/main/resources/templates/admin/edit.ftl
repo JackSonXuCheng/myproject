@@ -9,7 +9,6 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <#--<link href="${site.contextPath}/lib/layui-v2.5.4/css/layui.css" rel="stylesheet" type="text/css"/>-->
     <link href="${site.contextPath}/antdesign/css/main.css" rel="stylesheet" type="text/css"/>
-    <link href="${site.contextPath}/layuiadmin/style/admin.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -17,12 +16,42 @@
     <div class="layui-card">
         <div class="layui-card-body" style="padding: 15px;">
             <form class="layui-form" wid100 action="submit" method="post" lay-filter="component-form-group">
+                <input type="hidden" name="pageSize" value="${pageSize}">
+                <input type="hidden" name="pageNum" value="${pageNum}">
                 <input type="hidden" name="id" value="${admin.id}">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">xx名称：</label>
+                    <label class="layui-form-label">管理员名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="name" value="${admin.name}" lay-verify="required" maxLength="128"
-                               placeholder="请输入角色名称" autocomplete="off" class="layui-input">
+                        <input type="text" name="username" value="${admin.username}" lay-verify="required"
+                               maxLength="128" placeholder="请输入管理员名称"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">管理员密码：</label>
+                    <div class="layui-input-inline">
+                        <input type="password" name="password" lay-verify="required" maxLength="128"
+                               placeholder="请输入管理员密码"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">描述：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="description" value="${admin.description}" lay-verify="required"
+                               maxLength="128" placeholder="请输入描述"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否启动:</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="isBuiltin" id="switchTest" lay-skin="switch"
+                               lay-filter="switchTest"
+                               <#if admin.isBuiltin>checked</#if>
+                               lay-text="是|不是">
                     </div>
                 </div>
 
@@ -38,7 +67,8 @@
                     <div class="layui-input-block">
                         <div class="layui-footer" style="left: 0;">
                             <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">提 交</button>
-                            <button type="reset" class="layui-btn layui-btn-primary" onclick="location.href='list'">取
+                            <button type="reset" class="layui-btn layui-btn-primary"
+                                    onclick="location.href='list?pageSize=${pageSize}&pageNum=${pageNum}'">取
                                 消
                             </button>
                         </div>
@@ -51,8 +81,7 @@
 
 </body>
 <script src="${site.contextPath}/lib/jquery.js"></script>
-<script src="${site.contextPath}/lib/layui-v2.5.4/layui.js"></script>
-<script src="${site.contextPath}/js/common/submit.js"></script>
+<script src="${site.contextPath}/layui/layui.js"></script>
 <script>
     layui.use(['form'], function () {
         var form = layui.form

@@ -69,7 +69,7 @@
                     <a href="javascript:;"><i class="seraph icon-lock"></i><cite>锁屏</cite></a>
                 </li>
                 <li class="layui-nav-item" id="userInfo">
-                    <a href="javascript:;"><img src="${site.contextPath}/images/face.jpg"
+                    <a href="javascript:;"><img src="${site.contextPath}/images/userAvar.jpg"
                                                 class="layui-nav-img userAvatar" width="35" height="35"><cite
                             class="adminName"><@shiro.user> <@shiro.principal/> </@shiro.user></cite></a>
                     <dl class="layui-nav-child">
@@ -95,7 +95,7 @@
     <!-- 左侧导航 -->
     <div class="layui-side layui-bg-black">
         <div class="user-photo">
-            <a class="img" title="我的头像"><img src="${site.contextPath}/images/face.jpg" class="userAvatar"></a>
+            <a class="img" title="我的头像"><img src="${site.contextPath}/images/userAvar.jpg" class="userAvatar"></a>
             <p>你好！<span class="userName"><@shiro.user> <@shiro.principal/> </@shiro.user></span>, 欢迎登录</p>
         </div>
         <!-- 搜索 -->
@@ -203,6 +203,7 @@
         var $nav = $("#nav a");
         var $menus = $("#menus ul");
         $nav.click(function () {
+
             /*
               console.info("飒飒法零零"+$currentMenu);
               $navBar.hide();
@@ -219,6 +220,8 @@
             $menus.hide();
             $currentMenu.show();
 
+            $this.parent().parent().find("li").removeClass("layui-this");
+            $this.parent().addClass("layui-this");
             return false;
 
         });

@@ -1,100 +1,78 @@
-
 <!DOCTYPE html>
-<html lang="en" class="no-js">
-
+<html class="loginHtml">
 <head>
-
     <meta charset="utf-8">
-    <title>MyProject Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="${site.contextPath}/css/login_css/css/reset.css">
-    <link rel="stylesheet" href="${site.contextPath}/css/login_css/css/supersized.css">
-    <link rel="stylesheet" href="${site.contextPath}/css/login_css/css/style.css">
+    <title>登录--layui后台管理模板 2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="${site.contextPath}/favicon.ico">
+    <link rel="stylesheet" href="${site.contextPath}/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="${site.contextPath}/css/public.css" media="all"/>
     <script src="${site.contextPath}/js/jquery/jquery.min.js" type="text/javascript"></script>
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-       <!-- <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
-    <![endif]-->
-
 </head>
-
-<body>
-
-<div class="page-container">
-    <h1>Myproject Login</h1>
-    <form action="login" method="post" id="logs">
-        <div>
-            <input type="text" name="username" class="username" placeholder="Username" autocomplete="off" required/>
-        </div>
-        <div>
-            <input type="password" name="password" class="password" placeholder="Password" oncontextmenu="return false"
-                   onpaste="return false" required/>
-        </div>
-        <button id="lo" type="button">Sign In</button>
-    </form>
-    <div class="connect">
-        <p>If we can only encounter each other rather than stay with each other,then I wish we had never
-            encountered.</p>
-        <p style="margin-top:20px;">如果只是遇见，不能停留，不如不遇见。</p>
+<body class="loginBody">
+<form class="layui-form" action="login" id="login" method="post">
+    <div class="login_face"><img src="${site.contextPath}/images/userAvar.jpg" class="userAvatar"></div>
+    <div class="layui-form-item input-item">
+        <label for="username">用户名</label>
+        <input type="text" placeholder="请输入用户名" autocomplete="off" id="userName" name="username" class="layui-input"
+               lay-verify="required">
     </div>
-</div>
-<div class="alert" style="display:none">
-    <h2>消息</h2>
-    <div class="alert_con">
-        <p id="ts">${msg}</p>
-        <p style="line-height:70px"><a class="btn">确定</a></p>
+    <div class="layui-form-item input-item">
+        <label for="password">密码</label>
+        <input type="password" placeholder="请输入密码" autocomplete="off" id="password" name="password" class="layui-input"
+               lay-verify="required">
     </div>
-</div>
+    <div class="layui-form-item input-item" id="imgCode">
+        <label for="code">验证码</label>
+        <input type="text" placeholder="请输入验证码" autocomplete="off" name="code" class="layui-input"
+               lay-verify="required">
+        <img src="img/getKaptchaImage">
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn layui-block" id="lo" lay-filter="login" lay-submit>登录</button>
+    </div>
+    <input id="msg" type="hidden" value="${msg}">
 
-<!-- Javascript -->
-<script src="${site.contextPath}/js/login_js/js/supersized.3.2.7.min.js"></script>
-<script src="${site.contextPath}/js/login_js/js/supersized-init.js"></script>
+    <script type="text/javascript" src="${site.contextPath}/layui/layui.js"></script>
+
+</form>
 <script>
-    $(".btn").click(function () {
-        is_hide();
-    })
-    var u = $("input[name=username]");
-    var p = $("input[name=password]");
-    /*$("#submit").live('click',function(){
-        if(u.val() == '' || p.val() =='')
-        {
-            $("#ts").html("用户名或密码不能为空~");
-            is_show();
-            return false;
-        }
-    });*/
-    window.onload = function () {
-        $(".connect p").eq(0).animate({"left": "0%"}, 600);
-        $(".connect p").eq(1).animate({"left": "0%"}, 400);
-        if ("${msg}") {
-            is_show();
-        }
-    }
+    var layer;
+    layui.use(['element', 'table', 'layer'], function () {
+        layer = layui.layer;
 
-    function is_hide() {
-        $(".alert").animate({"top": "-40%"}, 300)
-    }
+        //表单输入效果
+        $(".loginBody .input-item").click(function (e) {
+            e.stopPropagation();
+            $(this).addClass("layui-input-focus").find(".layui-input").focus();
+        })
+        $(".loginBody .layui-form-item .layui-input").focus(function () {
+            $(this).parent().addClass("layui-input-focus");
+        })
+        $(".loginBody .layui-form-item .layui-input").blur(function () {
+            $(this).parent().removeClass("layui-input-focus");
+            if ($(this).val() != '') {
+                $(this).parent().addClass("layui-input-active");
+            } else {
+                $(this).parent().removeClass("layui-input-active");
+            }
+        })
+        var msg = $("#msg").val();
+        if (msg) {
+            layer.msg(msg, {time: 3000})
+        }
+    });
 
-    function is_show() {
-        $(".alert").show().animate({"top": "45%"}, 300)
-    }
 </script>
 <script>
-    $("#lo").click(function () {
-        if (u.val() == '' || p.val() == '') {
-            $("#ts").html("用户名或密码不能为空~");
-            is_show();
-            return false;
-        }
-        $("#logs").submit();
-    });
+
+
 </script>
 </body>
-
 </html>
-

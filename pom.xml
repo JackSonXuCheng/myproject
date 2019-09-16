@@ -34,6 +34,12 @@
             <name>aliyun</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public</url>
         </repository>
+
+        <repository>
+            <id>kaptcha</id>
+            <name>kaptcha</name>
+            <url>https://mvnrepository.com/artifact/com.github.penggle/kaptcha</url>
+        </repository>
     </repositories>
 
 
@@ -66,6 +72,7 @@
         <commons.lang3.version>3.2.1</commons.lang3.version>
         <commons.io.version>2.2</commons.io.version>
         <fastjson.version>1.2.12</fastjson.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
     </properties>
 
     <dependencyManagement>
@@ -170,6 +177,13 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
+            <!--验证码-->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

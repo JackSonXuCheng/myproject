@@ -31,4 +31,16 @@ public class Admin extends BasePojo implements Serializable {
     @Column(name = "password", type = MySqlTypeConstant.VARCHAR)
     private String password;
 
+    /**
+     * 描述
+     */
+    @Column(name = "description", type = MySqlTypeConstant.VARCHAR)
+    private String description;
+
+    /**
+     * 是否启动
+     */
+    @Column(name = "is_builtin", type = MySqlTypeConstant.BIT, length = 1, defaultValue = "1")
+    private Boolean isBuiltin;
+
 }

@@ -52,10 +52,23 @@ public class [entity_name]Controller {
      * @return
      */
     @GetMapping("edit")
-    public String edit(Long id, Model model){
+    public String edit(Long id, Model model,  @RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum, @RequestParam(name = "pageSize",defaultValue = "10") Integer pageSize) {
         model.addAttribute("[entity_name_small]", [entity_name_small]Service.selectByKey(id));
+          model.addAttribute("pageNum",pageNum);
+          model.addAttribute("pageSize",pageSize);
         return "[webapp_entity]/edit";
     }
+
+
+     /**
+      * 添加页展示
+      */
+        @GetMapping("add")
+        public String add(Model model, @RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "10") Integer pageSize){
+            model.addAttribute("pageNum",pageNum);
+            model.addAttribute("pageSize",pageSize);
+            return "admin/add";
+        }
 
 
     /**

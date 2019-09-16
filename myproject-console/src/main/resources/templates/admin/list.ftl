@@ -47,11 +47,12 @@
             <form id="search-form" class="layui-form" action="list" method="get">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        xx名称：
+                        管理员名称：
                     </div>
                     <div class="layui-inline">
-                        <input type="text" name="name" placeholder="请输入xx"
-                               <#if searchCdt?? && searchCdt.name??>value="${searchCdt.name}"</#if> autocomplete="off"
+                        <input type="text" name="username" placeholder="请输入管理员名称"
+                               <#if searchCdt?? && searchCdt.username??>value="${searchCdt.username}"</#if>
+                               autocomplete="off"
                                class="layui-input">
                     </div>
                     <div class="layui-inline search-btn">
@@ -63,7 +64,7 @@
         </div>
         <div class="layui-card-body layui-form">
             <div style="padding-bottom: 5px;">
-                <a href="add">
+                <a href="add?pageNum=${pageResult.pageNum}&pageSize=${pageResult.pageSize}">
                     <button type="button" class="layui-btn layui-btn-normal" id="add-btn">+ 新建</button>
                 </a>
                 <button type="button" class="layui-btn layui-btn-danger" id="delete-btn" style="margin-left: 10px;">-
@@ -81,7 +82,7 @@
                         </div>
                     </th>
                     <th>角色名称</th>
-                    <th>是否系统内置</th>
+                    <th>是否启动</th>
                     <th>描述</th>
                     <th>创建时间</th>
                     <th>操作</th>
@@ -97,23 +98,29 @@
                                     </div>
                                 </td>
                                 <td>
-                                    ${vo.id}
+                                    ${vo.username}
                                 </td>
                                 <td>
-                                    ${vo.xxx}
+                                    <#if vo.isBuiltin>
+                                        <span class="green">是</span>
+                                    <#else>
+                                        <span class="gray">否</span>
+                                    </#if>
+                                </td>
+                                <td>
+                                    ${vo.description}
                                 </td>
                                 <td>
                                     ${vo.createDate?string('yyyy-MM-dd HH:mm:ss')}
                                 </td>
                                 <td>
-                                    <a href="edit?id=${vo.id}" class="edit">编辑</a>
+                                    <a href="edit?id=${vo.id}&pageNum=${pageResult.pageNum}&pageSize=${pageResult.pageSize}"
+                                       class="edit">编辑</a>
                                 </td>
                             </tr>
                             </#list>
                         <#else>
-                            <tr>
-                                <td style="text-align: center" colspan="7">暂无数据</td>
-                            </tr>
+
                         </#if>
                 </tbody>
             </table>
@@ -142,6 +149,8 @@
             laypage.render({
                 elem: 'page-footer',
                 count: ${pageResult.total},
+                limit:${pageResult.pageSize},
+                curr:${pageResult.pageNum},
                 prev: '<em><</em>',
                 next: '<em>></em>',
                 layout: ['prev', 'page', 'next', 'limit', 'skip'],

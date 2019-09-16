@@ -137,6 +137,8 @@
                 count: ${pageResult.total},
                 prev: '<em><</em>',
                 next: '<em>></em>',
+                limit:${pageResult.pageSize},
+                curr:${pageResult.pageNum},
                 layout: ['prev', 'page', 'next', 'limit', 'skip'],
                 jump: function(obj, first){
                     if (!first){
