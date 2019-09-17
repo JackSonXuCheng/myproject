@@ -15,7 +15,7 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-body" style="padding: 15px;">
-            <form class="layui-form" wid100 action="submit" method="post" lay-filter="component-form-group">
+            <form class="layui-form" wid100 action="submit_edit" method="post" lay-filter="component-form-group">
              <input type="hidden" name ="pageSize" value="${pageSize}">
              <input type="hidden" name ="pageNum" value="${pageNum}">
                 <input type="hidden" name="id" value="${[entity_name].id}">

@@ -33,6 +33,7 @@ $().ready(function () {
     // 删除
     $(document).on('click', '#delete-btn', function () {
         var $checkedIds = $("#content-table input[name='ids']:enabled:checked");
+
         layui.use('layer', function () {
             var layer = layui.layer;
             if ($checkedIds == null || $checkedIds.length == 0) {
@@ -59,14 +60,14 @@ $().ready(function () {
                                 dataType: "json",
                                 cache: false,
                                 success: function (result) {
+                                    console.info(result);
                                     if (result.code == 0) {
                                         $checkedIds.closest("tr").remove();
-                                        layer.msg(result.data, {time: 2000});
                                         //location.reload(true);
                                         if ($("#content-table").find("tr").size() <= 1) {
                                             setTimeout(function () {
                                                 location.reload(true);
-                                            }, 3000);
+                                            }, 1000);
                                         }
                                     }
                                     layer.msg(result.message, {time: 2000});

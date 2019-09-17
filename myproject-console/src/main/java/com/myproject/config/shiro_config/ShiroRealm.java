@@ -105,6 +105,9 @@ public class ShiroRealm extends AuthorizingRealm {
         if (!DigestUtils.md5Hex(pwd).equals(admin.getPassword())) {
             throw new IncorrectCredentialsException();
         }
+        if (!admin.getIsBuiltin()) {
+            throw new DisabledAccountException();
+        }
         return new SimpleAuthenticationInfo(admin.getUsername(), pwd, getName());
     }
 }

@@ -67,7 +67,7 @@ public class ShiroConfig {
         //管理员管理
         chain.addPathDefinition("/console/admin/**", "perms[admin:admin]");
         //角色管理
-        chain.addPathDefinition("/role/**", "perms[admin:role]");
+        chain.addPathDefinition("/console/role/**", "perms[admin:role]");
 
 
         //必須放到最后

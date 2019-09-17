@@ -42,6 +42,17 @@
                 </div>
 
                 <div class="layui-form-item">
+                    <label class="layui-form-label">管理员角色:</label>
+                    <div class="layui-input-block">
+                        <#list roles as role>
+                            <input type="checkbox" name="roleIds" value="${role.id}" lay-skin="primary"
+                                   title="${role.roleName}">
+                        </#list>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
                     <label class="layui-form-label">是否启动:</label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="isBuiltin" id="switchTest" lay-skin="switch"
@@ -49,6 +60,7 @@
                                lay-text="是|不是">
                     </div>
                 </div>
+
             <#--<div class="layui-form-item">
                 <label class="layui-form-label">xxxx：</label>
                 <div class="layui-input-inline">

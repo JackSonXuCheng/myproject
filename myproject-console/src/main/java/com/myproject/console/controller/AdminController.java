@@ -5,7 +5,11 @@ import com.myproject.common.Base.Result;
 import com.myproject.common.MyStringUtil;
 import com.myproject.pojo.base.PageVO;
 import com.myproject.pojo.po.Admin;
+import com.myproject.pojo.po.AdminRole;
+import com.myproject.pojo.po.Role;
+import com.myproject.service.AdminRoleService;
 import com.myproject.service.AdminService;
+import com.myproject.service.RoleService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -31,6 +36,13 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private AdminRoleService adminRoleService;
+
 
     @ResponseBody
     @GetMapping("hello")
@@ -48,7 +60,8 @@ public class AdminController {
      * @return
      */
     @GetMapping("list")
-    public String list(Admin admin, PageVO pageVO, Model model) {
+    public String list(PageVO pageVO, Model model, Admin admin) {
+
         Map acMap = MyStringUtil.getAcMap(admin);
         PageInfo pageResult = adminService.queryByPageByLike(pageVO, admin, acMap);
         model.addAttribute("searchCdt", admin);
@@ -58,7 +71,6 @@ public class AdminController {
 
     /**
      * 编辑页展示
-     *
      * @param id
      * @param model
      * @return
@@ -69,6 +81,10 @@ public class AdminController {
         model.addAttribute("pageNum", pageNum);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("admin", adminService.selectByKey(id));
+        model.addAttribute("roles", roleService.selectAll());
+        List<AdminRole> adminRoles = adminRoleService.selectByEntity(new AdminRole(id));
+        List<Long> roleIds = adminRoles.stream().map(AdminRole::getRoleId).collect(Collectors.toList());
+        model.addAttribute("hasRoles", roleIds);
         return "admin/edit";
     }
 
@@ -78,6 +94,8 @@ public class AdminController {
     @GetMapping("add")
     public String add(Model model, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue =
             "10") Integer pageSize) {
+        List<Role> roles = roleService.selectAll();
+        model.addAttribute("roles", roles);
         model.addAttribute("pageNum", pageNum);
         model.addAttribute("pageSize", pageSize);
         return "admin/add";
@@ -89,10 +107,12 @@ public class AdminController {
      * @return
      */
     @PostMapping("submit")
-    public String submit(Admin admin, RedirectAttributes attr, @RequestParam(name = "pageNum", defaultValue = "1")
+    public String submit(Admin admin, Long[] roleIds, RedirectAttributes attr, @RequestParam(name = "pageNum",
+            defaultValue = "1")
             Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+
         //判断Admin是否存在
-        String url = "redirect:list";
+        String url;
         if (admin.getId() != null) {
             //编辑
             if (StringUtils.isNotBlank(admin.getPassword())) {
@@ -103,7 +123,9 @@ public class AdminController {
             //新增
             admin.setPassword(DigestUtils.md5Hex(admin.getPassword()));
             url = "redirect:list?pageSize=" + pageSize;
-
+        }
+        if (admin.getIsBuiltin() == null) {
+            admin.setIsBuiltin(false);
         }
         Admin a;
         if (StringUtils.isNotBlank(admin.getPassword())) {
@@ -111,6 +133,7 @@ public class AdminController {
         } else {
             a = adminService.saveOrUpdateIgnore(admin, "password");
         }
+        adminRoleService.saveOrUpdateAdminRole(a, roleIds);
         attr.addFlashAttribute("msg", "操作成功");
         return url;
     }
@@ -123,10 +146,12 @@ public class AdminController {
     @PostMapping("delete")
     @ResponseBody
     public Result<String> delete(Long[] ids) {
-        if (CollectionUtils.isEmpty(Arrays.asList(ids))) {
+        List<Long> adminIds = Arrays.asList(ids);
+        if (CollectionUtils.isEmpty(adminIds)) {
             return Result.exception(null, "请选择删除对象");
         }
         adminService.delete(ids);
+        adminRoleService.batchDeleteByAdminId(adminIds);
         return Result.success(null, "操作成功");
     }
 }

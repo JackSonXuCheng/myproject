@@ -43,4 +43,5 @@ public class Admin extends BasePojo implements Serializable {
     @Column(name = "is_builtin", type = MySqlTypeConstant.BIT, length = 1, defaultValue = "1")
     private Boolean isBuiltin;
 
+
 }

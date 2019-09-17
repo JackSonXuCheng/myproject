@@ -143,17 +143,23 @@
 
             </ul>
             <ul class="layui-nav layui-nav-tree" id="systemeSttings" style="display:none;">
-
+               <@shiro.hasPermission name="admin:newsList">
                 <li class="layui-nav-item"><a data-url="page/news/newsList.html"><i class="seraph icon-text"
                                                                                     data-icon="icon-text"></i><cite>全局设置</cite></a>
                 </li>
-                <li class="layui-nav-item"><a data-url="page/news/newsList.html"><i class="seraph icon-text"
-                                                                                    data-icon="icon-text"></i><cite>角色管理</cite></a>
+               </@shiro.hasPermission>
+
+                <@shiro.hasPermission name="admin:role">
+                <li class="layui-nav-item"><a data-url="role/list"><i class="seraph icon-text"
+                                                                      data-icon="icon-text"></i><cite>角色管理</cite></a>
                 </li>
+                </@shiro.hasPermission>
+
+                <@shiro.hasPermission name="admin:admin">
                 <li class="layui-nav-item"><a data-url="admin/list"><i class="seraph icon-text"
                                                                        data-icon="icon-text"></i><cite>管理员管理</cite></a>
                 </li>
-
+                </@shiro.hasPermission>
             </ul>
         </div>
 

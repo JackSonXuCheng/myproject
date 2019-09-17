@@ -3,12 +3,12 @@
  *  [entity_name]Controller
  * 
  */
-package [package_path]controller;
+package [package_path]console.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.myproject.common.Base.Result;
 import com.myproject.pojo.base.PageVO;
-import [package_path]pojo.po[entity_name];
+import [package_path]pojo.po.[entity_name];
 import [package_path]service.[entity_name]Service;
 
 
@@ -67,7 +67,7 @@ public class [entity_name]Controller {
         public String add(Model model, @RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "10") Integer pageSize){
             model.addAttribute("pageNum",pageNum);
             model.addAttribute("pageSize",pageSize);
-            return "admin/add";
+            return "[webapp_entity]/add";
         }
 
 
@@ -76,8 +76,15 @@ public class [entity_name]Controller {
      * @param
      * @return
      */
-    @PostMapping("submit")
-    public String submit([entity_name] [entity_name_small], RedirectAttributes attr){
+    @PostMapping("submit{act}")
+    public String submit(@PathVariable(name = "act") String act,[entity_name] [entity_name_small], RedirectAttributes attr){
+            String url="redirect:list";
+            if ("edit".equals(act)){
+               url = "redirect:list?pageNum=" + pageNum + "&pageSize=" + pageSize;
+
+            }else {
+                url = "redirect:list?pageSize=" + pageSize;
+            }
         [entity_name_small]Service.saveOrUpdate([entity_name_small]);
         attr.addFlashAttribute("msg", "操作成功");
         return "redirect:list";

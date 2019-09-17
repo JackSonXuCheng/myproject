@@ -16,6 +16,15 @@ import lombok.Data;
 @javax.persistence.Table(name = "m_admin_role")
 @Data
 public class AdminRole extends BasePojo {
+
+    public AdminRole(Long adminId) {
+        this.adminId = adminId;
+    }
+
+
+    public AdminRole() {
+    }
+
     /**
      * 管理员主键
      */

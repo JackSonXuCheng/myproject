@@ -2,13 +2,15 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>编辑用户角色</title>
+    <title>添加角色</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <#--<link href="${site.contextPath}/lib/layui-v2.5.4/css/layui.css" rel="stylesheet" type="text/css"/>-->
     <link href="${site.contextPath}/antdesign/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="${site.contextPath}/antdesign/css/main.css" rel="stylesheet" type="text/css"/>
+
 </head>
 <body>
 
@@ -18,58 +20,40 @@
             <form class="layui-form" wid100 action="submit" method="post" lay-filter="component-form-group">
                 <input type="hidden" name="pageSize" value="${pageSize}">
                 <input type="hidden" name="pageNum" value="${pageNum}">
-                <input type="hidden" name="id" value="${admin.id}">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">管理员名称：</label>
+                    <label class="layui-form-label">角色名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="username" value="${admin.username}" lay-verify="required"
-                               maxLength="128" placeholder="请输入管理员名称"
+                        <input type="text" name="roleName" lay-verify="required" maxLength="128" placeholder="请输入角色名称"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">管理员密码：</label>
-                    <div class="layui-input-inline">
-                        <input type="password" name="password" maxLength="128"
-                               placeholder="请输入管理员密码"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">描述：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="description" value="${admin.description}" lay-verify="required"
-                               maxLength="128" placeholder="请输入描述"
+                        <input type="text" name="description" lay-verify="required" maxLength="128" placeholder="请输入描述"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">权限：</label>
+                </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">管理员角色:</label>
+                    <label class="layui-form-label">系统设置：</label>
                     <div class="layui-input-block">
-                        <#list roles as r>
-                            <input type="checkbox" name="roleIds" value="${r.id}" lay-skin="primary"
-                                   title="${r.roleName}"
-                            <#if hasRoles?seq_contains(r.id)>checked</#if>
-                            >
-                        </#list>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">是否启动:</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" name="isBuiltin" id="switchTest" lay-skin="switch"
-                               lay-filter="switchTest"
-                               <#if admin.isBuiltin>checked</#if>
-                               lay-text="是|不是">
+                        <input type="checkbox" name="authorities" value="admin:globalConfig" lay-skin="primary"
+                               title="全局设定" checked="">
+                        <input type="checkbox" name="authorities" value="admin:role" lay-skin="primary" title="角色管理"
+                               checked="">
+                        <input type="checkbox" name="authorities" value="admin:admin" lay-skin="primary" title="管理员管理"
+                               checked="">
                     </div>
                 </div>
 
             <#--<div class="layui-form-item">
-                <label class="layui-form-label">角色描述：</label>
+                <label class="layui-form-label">xxxx：</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="description" value="${admin.xxx}" lay-verify="required" maxLength="128" placeholder="请输入角色描述" autocomplete="off" class="layui-input">
+                    <input type="text" name="description" lay-verify="required" maxLength="128" placeholder="xxxx" autocomplete="off" class="layui-input">
                 </div>
             </div>-->
 

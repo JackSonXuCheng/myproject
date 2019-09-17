@@ -150,8 +150,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             } else {
                 this.save(entity);
             }
-        }
-        {
+        } else {
             this.save(entity);
             t = entity;
         }

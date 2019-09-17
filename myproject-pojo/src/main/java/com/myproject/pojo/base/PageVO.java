@@ -56,7 +56,8 @@ public class PageVO {
             return OrderDirection.valueOf(value.toUpperCase());
         }
     }
-    private OrderDirection orderDirection;
+
+    private OrderDirection orderDirection = OrderDirection.DESC;
 
 
 }
