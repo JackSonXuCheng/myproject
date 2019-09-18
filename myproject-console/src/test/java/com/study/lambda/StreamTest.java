@@ -1,14 +1,10 @@
 package com.study.lambda;
 
 import com.study.entity.Person;
-import org.apache.logging.log4j.util.PropertySource;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class StreamTest {
 
@@ -87,7 +83,6 @@ public class StreamTest {
 
        //根据ID和Total 进行分组 ，并求和
         Map<Integer, Map<Integer, Integer>> collect3 = personList.stream().collect(Collectors.groupingBy(Person::getId, Collectors.groupingBy(Person::getTotal, Collectors.summingInt(Person::getTotal))));
-
 
     }
 }

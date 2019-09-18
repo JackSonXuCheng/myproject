@@ -21,7 +21,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">管理员名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="username" lay-verify="required" maxLength="128" placeholder="请输入管理员名称"
+                        <input type="text" name="username" id="username" lay-verify="required|remote" maxLength="128"
+                               placeholder="请输入管理员名称"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -88,14 +89,57 @@
 </body>
 <script src="${site.contextPath}/lib/jquery.js"></script>
 <script src="${site.contextPath}/layui/layui.js"></script>
+
 <script>
-    layui.use(['form'], function () {
+    layui.use(['form', 'layer'], function () {
         var form = layui.form
-                , layer = layui.layer
-                , $ = layui.$;
+                , layer = layui.layer;
+
+        $("#username").mouseleave(function () {
+            var username = $("#username").val();
+            if (username == "") {
+                layer.msg("请先填管理员名称");
+                return false;
+            }
+
+            $.ajax({
+                url: "checkAdmin",
+                type: "get",
+                data: {'username': username},
+                cache: false,
+                success: function (result) {
+                    if (result.code != 0) {
+                        layer.msg(result.message, {time: 1500});
+                        $("#username").focus();
+                    }
+                }
+
+            });
+
+        });
 
         //自定义验证规则
         form.verify({
+            remote: function (value) {
+                var code = 0;
+                $.ajax({
+                    url: "checkAdmin",
+                    type: "get",
+                    data: {'username': value},
+                    cache: false,
+                    /*必须加上async 才能不能跳转添加*/
+                    async: false,
+                    success: function (result) {
+                        if (result.code != 0) {
+                            code = result.code;
+                        }
+                    }
+                });
+                if (code != 0) {
+                    $("#username").focus();
+                    return '该账号已存在';
+                }
+            },
             title: function (value) {
                 if (value.length < 5) {
                     return '标题至少得5个字符啊';

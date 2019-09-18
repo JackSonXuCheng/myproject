@@ -60,7 +60,6 @@ $().ready(function () {
                                 dataType: "json",
                                 cache: false,
                                 success: function (result) {
-                                    console.info(result);
                                     if (result.code == 0) {
                                         $checkedIds.closest("tr").remove();
                                         //location.reload(true);

@@ -23,6 +23,11 @@ public class Person  {
 
     }
 
+    public Person(String name, Integer total) {
+        this.name = name;
+        this.total = total;
+    }
+
     public Person(Integer id, Integer total) {
         this.id = id;
         this.total = total;
@@ -87,5 +92,17 @@ public class Person  {
 
     public void setMoney(BigDecimal money) {
         this.money = money;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", sex='" + sex + '\'' +
+                ", name='" + name + '\'' +
+                ", total=" + total +
+                ", date=" + date +
+                ", money=" + money +
+                '}';
     }
 }

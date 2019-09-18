@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -154,4 +155,34 @@ public class AdminController {
         adminRoleService.batchDeleteByAdminId(adminIds);
         return Result.success(null, "操作成功");
     }
+
+    /**
+     * 判断管理员是否已经存在
+     *
+     * @param username
+     * @return
+     */
+    @GetMapping("checkAdmin")
+    @ResponseBody
+    public Result<String> checkAdmin(String username, Long id) {
+        Admin admin = new Admin();
+        admin.setUsername(username);
+        Admin oldAdmin = adminService.selectOne(admin);
+        //id 为空 则是添加操作
+        if (id == null) {
+            if (!Objects.isNull(oldAdmin)) {
+                return Result.exception(null, "该管理员已存在");
+            }
+        } else {
+            Admin difAdmin = adminService.selectByKey(id);
+            //如果查询出来的ID 跟difAdmin不一样，则要修改的角色已经存在了
+            if (!Objects.isNull(difAdmin) && !Objects.isNull(oldAdmin)) {
+                if (!difAdmin.getId().equals(oldAdmin.getId())) {
+                    return Result.exception(null, "该管理员已存在");
+                }
+            }
+        }
+        return Result.success("");
+    }
+
 }
