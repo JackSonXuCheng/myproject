@@ -8,12 +8,15 @@ import com.myproject.service.AdminService;
 import com.myproject.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -86,6 +89,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 用户认证
+     *
      * @param authenticationToken
      * @return
      * @throws AuthenticationException
@@ -99,15 +103,26 @@ public class ShiroRealm extends AuthorizingRealm {
         Admin admin = new Admin();
         admin.setUsername(username);
         admin = adminService.selectOne(admin);
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        admin.setIp(session.getHost());
         if (Objects.isNull(admin)) {
             throw new UnknownAccountException();
         }
+
+        if ((admin.getFailedLoginCnt() == null ? 0 : admin.getFailedLoginCnt()) > 5) {
+            throw new LockedAccountException();
+        }
         if (!DigestUtils.md5Hex(pwd).equals(admin.getPassword())) {
+            admin.setFailedLoginCnt(admin.getFailedLoginCnt() == null ? 1 : admin.getFailedLoginCnt() + 1);
+            adminService.updateNotNull(admin);
             throw new IncorrectCredentialsException();
         }
-        if (!admin.getIsBuiltin()) {
+        if (BooleanUtils.isFalse(admin.getIsBuiltin())) {
             throw new DisabledAccountException();
         }
+        admin.setFailedLoginCnt(0);
+        adminService.updateNotNull(admin);
         return new SimpleAuthenticationInfo(admin.getUsername(), pwd, getName());
     }
 }

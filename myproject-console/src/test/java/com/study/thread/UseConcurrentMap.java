@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UseConcurrentMap {
 
 	public static void main(String[] args) {
+        //线程安全
 		ConcurrentHashMap<String, Object> chm = new ConcurrentHashMap<String, Object>();
 		chm.put("k1", "v1");
 		chm.put("k2", "v2");

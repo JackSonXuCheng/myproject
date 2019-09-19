@@ -52,6 +52,6 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<AdminRole> implements 
 
     @Override
     public void batchDeleteByRoleId(List<Long> roleIds) {
-
+        adminRoleMapper.batchDeleteByRoleId(roleIds);
     }
 }

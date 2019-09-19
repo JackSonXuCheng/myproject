@@ -38,10 +38,37 @@ public class Admin extends BasePojo implements Serializable {
     private String description;
 
     /**
+     * 登陆IP
+     */
+    @Column(name = "ip", type = MySqlTypeConstant.VARCHAR)
+    private String ip;
+
+    /**
+     * 登录失败次数
+     */
+    @Column(name = "failed_login_cnt", type = MySqlTypeConstant.INT, length = 11, defaultValue = "0")
+    private Integer failedLoginCnt;
+
+    /**
      * 是否启动
      */
     @Column(name = "is_builtin", type = MySqlTypeConstant.BIT, length = 1, defaultValue = "1")
     private Boolean isBuiltin;
 
+    /**
+     * 经度
+     */
+    @Column(name = "longitude", type = MySqlTypeConstant.DECIMAL)
+    private Double longitude;
+    /**
+     * 维度
+     */
+    @Column(name = "latitude", type = MySqlTypeConstant.DECIMAL)
+    private Double latitude;
 
+    /**
+     * 地址
+     */
+    @Column(name = "address", type = MySqlTypeConstant.VARCHAR)
+    private String address;
 }

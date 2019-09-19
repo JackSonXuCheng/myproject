@@ -15,7 +15,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -56,6 +55,7 @@ public class AdminController {
 
     /**
      * 列表页展示
+     *
      * @param
      * @param model
      * @return
@@ -72,6 +72,7 @@ public class AdminController {
 
     /**
      * 编辑页展示
+     *
      * @param id
      * @param model
      * @return
@@ -104,6 +105,7 @@ public class AdminController {
 
     /**
      * 提交保存
+     *
      * @param
      * @return
      */
@@ -134,25 +136,28 @@ public class AdminController {
         } else {
             a = adminService.saveOrUpdateIgnore(admin, "password");
         }
-        adminRoleService.saveOrUpdateAdminRole(a, roleIds);
+
+        if (roleIds != null && roleIds.length > 0) {
+            adminRoleService.saveOrUpdateAdminRole(a, roleIds);
+        }
         attr.addFlashAttribute("msg", "操作成功");
         return url;
     }
 
     /**
      * 删除
+     *
      * @param ids
      * @return
      */
     @PostMapping("delete")
     @ResponseBody
     public Result<String> delete(Long[] ids) {
-        List<Long> adminIds = Arrays.asList(ids);
-        if (CollectionUtils.isEmpty(adminIds)) {
+        if (ids != null && ids.length > 0) {
             return Result.exception(null, "请选择删除对象");
         }
         adminService.delete(ids);
-        adminRoleService.batchDeleteByAdminId(adminIds);
+        adminRoleService.batchDeleteByAdminId(Arrays.asList(ids));
         return Result.success(null, "操作成功");
     }
 
