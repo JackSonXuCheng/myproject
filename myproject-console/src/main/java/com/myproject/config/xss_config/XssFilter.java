@@ -46,8 +46,7 @@ public class XssFilter implements Filter {
             return;
         }
 
-        XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request,
-                IS_INCLUDE_RICH_TEXT);
+        XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request, IS_INCLUDE_RICH_TEXT);
         filterChain.doFilter(xssRequest, response);
     }
 

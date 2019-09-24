@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
-    HttpServletRequest orgRequest = null;
     private boolean isIncludeRichText = false;
+    HttpServletRequest orgRequest = null;
 
     public XssHttpServletRequestWrapper(HttpServletRequest request, boolean isIncludeRichText) {
         super(request);
@@ -68,6 +68,15 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         return parameterValues;
     }
 
+    /**
+     * 获取最原始的request
+     *
+     * @return
+     */
+    public HttpServletRequest getOrgRequest() {
+        return orgRequest;
+    }
+
     @Override
     public String getHeader(String name) {
         name = XssFilterUtil.clean(name);
@@ -76,15 +85,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             value = XssFilterUtil.clean(value);
         }
         return value;
-    }
-
-    /**
-     * 获取最原始的request
-     *
-     * @return
-     */
-    public HttpServletRequest getOrgRequest() {
-        return orgRequest;
     }
 
 }
