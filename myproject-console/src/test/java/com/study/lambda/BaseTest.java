@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -177,5 +178,74 @@ public class BaseTest {
         fileWriter.flush();
 
     }
+
+    @Test
+    public void test7() {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("小明", 1);
+        map.put("小红", 2);
+        map.put("小龙", 3);
+        map.forEach((k, v) -> {
+            System.out.println(k);
+            System.out.println(v);
+        });
+
+    }
+
+    @Test
+    public void test8() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        Iterator<Integer> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+        ListIterator<Integer> listIterator = list.listIterator();
+        while (listIterator.hasNext()) {
+            listIterator.next();
+            listIterator.remove();
+        }
+        System.out.println(list);
+        Collections.unmodifiableList(list);
+    }
+
+    @Test
+    public void test9() {
+        System.out.println(printResult(20));
+
+    }
+
+    public int printResult(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
+        }
+        return printResult(n - 1) + printResult(n - 2);
+
+    }
+
+    @Test
+    public void test10() {
+        List<Person> list = new ArrayList<>();
+        Consumer<Person> consumer = x -> {
+            if (x.getName().equals("lsf")) {
+                list.add(x);
+            }
+        };
+        consumer.andThen(x -> list.removeIf(str -> {
+            /* if (str.getName().equals("12")){
+                 return true;
+             }*/
+            return false;
+        }));
+
+    }
+
+
 
 }

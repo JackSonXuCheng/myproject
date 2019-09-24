@@ -58,12 +58,12 @@ public class Admin extends BasePojo implements Serializable {
     /**
      * 经度
      */
-    @Column(name = "longitude", type = MySqlTypeConstant.DECIMAL)
+    @Column(name = "longitude", type = MySqlTypeConstant.DECIMAL, length = 18, decimalLength = 6)
     private Double longitude;
     /**
      * 维度
      */
-    @Column(name = "latitude", type = MySqlTypeConstant.DECIMAL)
+    @Column(name = "latitude", type = MySqlTypeConstant.DECIMAL, length = 18, decimalLength = 6)
     private Double latitude;
 
     /**

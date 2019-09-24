@@ -73,6 +73,8 @@
         <commons.io.version>2.2</commons.io.version>
         <fastjson.version>1.2.12</fastjson.version>
         <kaptcha.version>2.3.2</kaptcha.version>
+
+        <jsoup.version>1.11.3</jsoup.version>
     </properties>
 
     <dependencyManagement>
@@ -183,7 +185,12 @@
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
             </dependency>
-
+            <!--防止xss攻击 爬虫-->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

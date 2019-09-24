@@ -24,6 +24,9 @@ spring:
         object_wrapper: freemarker.ext.beans.BeansWrapper
         number_format: 0.##
         classic_compatible: true
+  mvc:
+    view:
+      prefix: /templates/
 
 mybatis:
     type-aliases-package: com.myproject.pojo.po

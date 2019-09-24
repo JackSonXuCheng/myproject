@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">管理员角色:</label>
+                    <label class="layui-form-label" lay-verify="roled">管理员角色:</label>
                     <div class="layui-input-block">
                         <#list roles as role>
                             <input type="checkbox" name="roleIds" value="${role.id}" lay-skin="primary"
@@ -178,6 +178,12 @@
                 /^[\S]{6,12}$/
                 , '密码必须6到12位，且不能出现空格'
             ]
+            , roled: function () {
+                var checkeds = $("form input[name='roleIds']:checked");
+                if (checkeds == null || checkeds.length == 0) {
+                    return "角色未选择";
+                }
+            }
         });
     });
 </script>
@@ -188,17 +194,36 @@
         zoom: 15
     });
 
-    // 创建一个 Marker 实例：
+    // 创建一个 Marker 点击图标 实例：
     var marker = new AMap.Marker({
         // position: new AMap.LngLat(116.39, 39.9)   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
     });
 
     $().ready(function () {
+
+        AMap.plugin('AMap.Geolocation', function () {
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                timeout: 10000,          //超过10秒后停止定位，默认：5s
+                buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                zoomToAccuracy: true   //定位成功后是否自动调整地图视野到定位点
+            });
+            geolocation.getCurrentPosition(function (status, result) {
+                if (status == 'complete') {
+                    onComplete(result);
+                } else {
+                    alert("事变");
+                    onError(result)
+                }
+            });
+        });
+
         var lng = map.getCenter().toString();
         var lnglatArray = lng.split(",");
         $("#lonNum").val(lnglatArray[0]);
         $("#latNum").val(lnglatArray[1]);
         document.getElementById("lnglat").value = lng;
+
 
         AMap.plugin('AMap.Geocoder', function () {
             var geocoder = new AMap.Geocoder({
@@ -213,31 +238,6 @@
             });
 
         });
-        /*AMap.plugin('AMap.Geolocation', function() {
-            var geolocation = new AMap.Geolocation({
-                enableHighAccuracy: true,//是否使用高精度定位，默认:true
-                timeout: 10000,          //超过10秒后停止定位，默认：5s
-                buttonOffset: new AMap.Pixel(10, 20)//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                //zoomToAccuracy: true   //定位成功后是否自动调整地图视野到定位点
-            });
-
-            geolocation.getCurrentPosition(function(status,result){
-                if(status=='complete'){
-                    var lng = result.position.toString();
-                    var lnglatArray =lng.split(",");
-                    var longitude =lnglatArray[0];
-                    var latitude=lnglatArray[1];
-                    $("#lonNum").val(longitude);
-                    $("#latNum").val(latitude);
-                    var marker = new AMap.Marker({
-                        position: new AMap.LngLat(longitude, latitude)   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-                    });
-                    document.getElementById("lnglat").value = lng;
-                }else{
-                    onError(result)
-                }
-            });
-        });*/
 
     });
 
@@ -273,16 +273,22 @@
 
     });
     map.add(marker);
-
-
     //解析定位结果
     function onComplete(data) {
+        map.clearMap();
         var lng = data.position.toString();
         var lnglatArray = lng.split(",");
         $("#lonNum").val(lnglatArray[0]);
         $("#latNum").val(lnglatArray[1]);
-        alert(data.position);
-        document.getElementById("lnglat").value = lng;
+        $("#tipinput").val(data.formattedAddress);
+        /* var lng= $("#lnglat").val();*/
+        var marker = new AMap.Marker({
+            position: new AMap.LngLat(lnglatArray[0], lnglatArray[1])   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        });
+        map.setZoom(15);
+        //定位到当前位置
+        map.setCenter(data.position);
+        marker.setMap(map);
     }
 
     //解析定位错误信息

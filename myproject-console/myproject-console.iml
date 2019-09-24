@@ -62,6 +62,7 @@
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.12" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20140107" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.8" level="project" />
+    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.11.3" level="project" />
     <orderEntry type="module" module-name="myproject-mapper" />
     <orderEntry type="module" module-name="myproject-pojo" />
     <orderEntry type="library" name="Maven: tk.mybatis:mapper-spring-boot-starter:2.0.4" level="project" />

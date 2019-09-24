@@ -8,7 +8,7 @@
  * This documents is provided to wandaph contracting agent or authorized programmer only.
  * This source code is written and edited by wandaph Co,.Ltd Inc specially for financial
  * business contracting agent or authorized cooperative company, in order to help them to
- * install, programme or central control in certain project by themselves independently.
+ * install, programme or central control in certain myproject by themselves independently.
  * <p>
  * Disclaimer
  * If this source code is needed by the one neither contracting agent nor authorized programmer

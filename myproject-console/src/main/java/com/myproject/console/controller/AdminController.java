@@ -46,11 +46,11 @@ public class AdminController {
 
     @ResponseBody
     @GetMapping("hello")
-    public Result hello() {
+    public String hello(String name) {
         List<Admin> list = adminService.exec("select * from m_admin");
         List<Admin> admins = adminService.selectAll();
 
-        return Result.success(list);
+        return name;
     }
 
     /**
@@ -146,7 +146,6 @@ public class AdminController {
 
     /**
      * 删除
-     *
      * @param ids
      * @return
      */
@@ -163,7 +162,6 @@ public class AdminController {
 
     /**
      * 判断管理员是否已经存在
-     *
      * @param username
      * @return
      */
