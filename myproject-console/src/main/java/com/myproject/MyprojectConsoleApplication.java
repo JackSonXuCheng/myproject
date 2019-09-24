@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
 import tk.mybatis.spring.annotation.MapperScan;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.myproject")
 @MapperScan(basePackages = {"com.gitee.sunchenbin.mybatis.actable.dao.*"})
 @ComponentScans(@ComponentScan("com.gitee.sunchenbin.mybatis.actable.manager.*"))
 public class MyprojectConsoleApplication {

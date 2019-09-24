@@ -8,6 +8,7 @@
         <module>myproject-service</module>
         <module>myproject-common</module>
         <module>myproject-console</module>
+        <module>myproject-api</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

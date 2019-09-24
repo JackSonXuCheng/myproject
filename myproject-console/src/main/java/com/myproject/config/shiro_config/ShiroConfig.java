@@ -60,6 +60,7 @@ public class ShiroConfig {
         chain.addPathDefinition("/images/**", "anon");
         chain.addPathDefinition("/layui/**", "anon");
         chain.addPathDefinition("/json/**", "anon");
+        chain.addPathDefinition("/api/**", "anon");
         chain.addPathDefinition("/console/img/getKaptchaImage", "anon");
         chain.addPathDefinition("/console/login", "anon");
         chain.addPathDefinition("/console/logout", "logout");

@@ -23,6 +23,12 @@
             <artifactId>myproject-service</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!--必须加到console层，否则扫描不到-->
+        <dependency>
+            <groupId>com.myproject</groupId>
+            <artifactId>myproject-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
