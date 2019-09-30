@@ -15,6 +15,7 @@
 # Package Files #
 *.jar
 *.iml
+*rebel.xml
 *.war
 *.nar
 *.ear
