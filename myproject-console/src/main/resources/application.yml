@@ -27,6 +27,26 @@ spring:
   mvc:
     view:
       prefix: /templates/
+#     rabbitMQ配置
+  rabbitmq:
+    port: 5672
+    host: localhost
+    virtual-host: /
+    username: guest
+    password: guest
+    publisher-confirms: true
+    publisher-returns: true
+    # 对 rabbitmqTemplate 进行监听,当消息由于server的原因无法到达queue时，就会被监听到，以便执行ReturnCallback方法
+    # 默认为false,Server端会自动删除不可达消息
+    template:
+      mandatory: true
+# 消费端手动确认
+    listener:
+      simple:
+        acknowledge-mode: manual
+# 并发消费
+        concurrency: 5
+        max-concurrency: 10
 
 mybatis:
     type-aliases-package: com.myproject.pojo.po

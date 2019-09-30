@@ -9,6 +9,7 @@
         <module>myproject-common</module>
         <module>myproject-console</module>
         <module>myproject-api</module>
+        <module>myproject-mq</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -192,6 +193,7 @@
                 <artifactId>jsoup</artifactId>
                 <version>${jsoup.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

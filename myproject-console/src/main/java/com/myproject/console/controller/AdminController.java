@@ -152,7 +152,7 @@ public class AdminController {
     @PostMapping("delete")
     @ResponseBody
     public Result<String> delete(Long[] ids) {
-        if (ids != null && ids.length > 0) {
+        if (ids == null && ids.length == 0) {
             return Result.exception(null, "请选择删除对象");
         }
         adminService.delete(ids);

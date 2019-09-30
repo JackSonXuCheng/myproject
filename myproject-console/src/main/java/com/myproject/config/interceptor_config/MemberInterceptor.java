@@ -1,12 +1,16 @@
 package com.myproject.config.interceptor_config;
 
 import com.alibaba.fastjson.JSON;
+import com.myproject.common.Base.Result;
+import com.myproject.config.xss_config.XssHttpServletRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 /**
  * @author jackson
@@ -24,8 +28,19 @@ public class MemberInterceptor implements HandlerInterceptor {
             Exception {
         log.warn("前端请求参数：" + JSON.toJSONString(request.getParameterMap()));
         log.warn("请求类型：" + request.getContentType());
+        XssHttpServletRequestWrapper xssHttpServletRequestWrapper = new XssHttpServletRequestWrapper(request, true);
+        String username = xssHttpServletRequestWrapper.getParameter("username");
+        String randomKey = xssHttpServletRequestWrapper.getParameter("randomKey");
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(randomKey)) {
+            Result result = Result.invalid("username or randomKey is blank", null);
+            PrintWriter printWriter = response.getWriter();
+            printWriter.write(JSON.toJSONString(result));
+            printWriter.flush();
+            printWriter.close();
+            return false;
+        }
 
-
-        return false;
+        //TODO:用户登录判断
+        return true;
     }
 }
