@@ -122,9 +122,8 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
                 //获取此字段的值
                 try {
                     Object o = field.get(entity);
-                    if (o != null && o.getClass().isAnnotationPresent(Column.class)) {
-                        Column column = o.getClass().getAnnotation(Column.class);
-                        criteria.andEqualTo(column.name(), o);
+                    if (o != null && field.isAnnotationPresent(Column.class)) {
+                        criteria.andEqualTo(field.getName(), o);
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
