@@ -17,3 +17,4 @@ eureka:
     eviction-interval-timer-in-ms: 5000 #扫描失效服务的间隔时间（缺省为60*1000ms）
     peer-eureka-nodes-update-interval-ms: 10000
     wait-time-in-ms-when-sync-empty: 0
+

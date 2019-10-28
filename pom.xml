@@ -13,6 +13,9 @@
         <module>myproject-eureka</module>
         <module>myproject-discovery</module>
         <module>myproject-ribbon</module>
+        <module>myproject-feign</module>
+        <module>myproject-hystrix</module>
+        <module>myproject-hystrix-ribbon</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -82,6 +85,8 @@
         <jsoup.version>1.11.3</jsoup.version>
 
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
+        <spring-cloud-openfeign.version>2.0.1.RELEASE</spring-cloud-openfeign.version>
+
     </properties>
 
     <dependencyManagement>
@@ -95,7 +100,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${spring-cloud-openfeign.version}</version>
+            </dependency>
             <!--mybatis-->
             <dependency>
                 <groupId>tk.mybatis</groupId>
