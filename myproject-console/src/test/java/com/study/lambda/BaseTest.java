@@ -5,6 +5,8 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import java.io.*;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
  * @comment:基础知识测试
  */
 public class BaseTest {
+
 
     @Test
     public void test1() {
@@ -246,6 +249,31 @@ public class BaseTest {
 
     }
 
+    @Test
+    public void test11() {
 
+        LocalTime startTime = LocalTime.of(21, 0);
+        LocalTime endTime = LocalTime.of(21, 30);
+        System.out.println(ChronoUnit.MINUTES.between(endTime, LocalTime.now()));
+
+    }
+
+    @Test
+    public void test12() {
+        Long l = 1l;
+        Long s = 1l;
+        Objects.equals(l, s);
+        System.out.println(l.equals(s));
+
+
+    }
+
+    @Test
+    public void test13() {
+        final Person person = new Person("熊爱红", 13);
+        person.setTotal(14);
+        System.out.println(person);
+
+    }
 
 }

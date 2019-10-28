@@ -29,6 +29,11 @@
             <artifactId>myproject-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!--  <dependency>
+              <groupId>com.myproject</groupId>
+              <artifactId>myproject-eureka</artifactId>
+              <version>${project.version}</version>
+          </dependency>-->
         <dependency>
             <groupId>com.myproject</groupId>
             <artifactId>myproject-mq</artifactId>

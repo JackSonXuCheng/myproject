@@ -10,6 +10,9 @@
         <module>myproject-console</module>
         <module>myproject-api</module>
         <module>myproject-mq</module>
+        <module>myproject-eureka</module>
+        <module>myproject-discovery</module>
+        <module>myproject-ribbon</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -77,10 +80,22 @@
         <kaptcha.version>2.3.2</kaptcha.version>
 
         <jsoup.version>1.11.3</jsoup.version>
+
+        <spring-cloud.version>Finchley.SR1</spring-cloud.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!--控制cloud的版本-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!--mybatis-->
             <dependency>
                 <groupId>tk.mybatis</groupId>
