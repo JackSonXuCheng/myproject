@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: myproject-hystrix-ribbon
+server:
+  port: 8095
+eureka:
+  client:
+    service-url:
+     defaultZone: http://localhost:8761/eureka/ #注册中心地址
+  instance:
+    prefer-ip-address: true # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'hystrix.stream'

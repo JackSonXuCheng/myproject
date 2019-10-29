@@ -1,0 +1,40 @@
+
+spring:
+  application:
+    name: myproject-zuul
+server:
+  port: 8097
+eureka:
+  client:
+    service-url:
+     defaultZone: http://localhost:8761/eureka/ #注册中心地址
+  instance:
+    prefer-ip-address: true # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+management:
+  #是否展示健康检查详情
+  endpoint:
+    health:
+      show-details: always
+  #开放所有监控端点
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+zuul:
+# 指定微服务路径 比如http://192.168.50.126:8097/myprojectDiscovery/discovery/hello/hello
+  routes:
+   myproject-discovery: /myprojectDiscovery/**
+   myproject-feign:
+#可以根据serviceId 来配置
+    service-id: myproject-feign
+    path: /feignUser/**
+# 忽略指定微服务 多个逗号隔开
+  ignored-services: myproject-feign
+#指定zuul的访问前缀
+  prefix: /routZull
+#忽略某些路径
+  ignored-patterns:
+
