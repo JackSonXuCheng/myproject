@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @date 2019/10/28 11:10
  * @comment: feign 测试
  */
-@FeignClient(name = "myproject-feign-user")
+// name值必须跟spring.boot.name 一致
+
+@FeignClient(name = "myproject-feign")
 public interface FeignServiceApi {
     /**
      * 通过用户查询用户Id
