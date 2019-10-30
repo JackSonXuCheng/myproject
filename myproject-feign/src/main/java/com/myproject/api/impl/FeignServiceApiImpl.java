@@ -20,4 +20,11 @@ public class FeignServiceApiImpl implements FeignServiceApi {
         user.setAge(12);
         return user;
     }
+
+    @Override
+    public User findUser(User user) {
+        user.setAge(12);
+        user.setId(13L);
+        return user;
+    }
 }

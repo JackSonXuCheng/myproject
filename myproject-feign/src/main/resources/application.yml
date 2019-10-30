@@ -15,4 +15,5 @@ eureka:
 management:
   endpoint:
     health:
+    # 显示健康详情
       show-details: always

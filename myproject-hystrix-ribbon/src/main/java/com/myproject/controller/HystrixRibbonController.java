@@ -25,7 +25,7 @@ public class HystrixRibbonController {
     @HystrixCommand(fallbackMethod = "findByIdFallBack")
     @GetMapping("findById")
     public String findById() {
-        return "hello";
+        return String.valueOf(0 / 0);
     }
 
     public String findByIdFallBack(Throwable throwable) {

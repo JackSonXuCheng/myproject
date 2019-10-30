@@ -2,8 +2,10 @@ package com.myproject.api;
 
 import com.myproject.feign.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 
 /**
  * @author jackson
@@ -23,4 +25,8 @@ public interface FeignServiceApi {
      */
     @GetMapping("/users/{id}")
     User findByUserId(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    User findUser(User user);
+
 }

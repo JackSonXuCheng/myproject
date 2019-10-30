@@ -6,6 +6,7 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 
 /**
+ * EnableCircuitBreaker注解配置Hystrix
  * @author jackson
  */
 @EnableCircuitBreaker
