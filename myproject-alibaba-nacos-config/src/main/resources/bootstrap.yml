@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: myproject-alibaba-nacos-config
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        # 指定group
+        group: DEFAULT_GROUP
+        file-extension: properties
+        # 文件后缀，默认为properties
+  profiles:
+    active: dev

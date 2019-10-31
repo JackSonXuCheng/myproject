@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: myproject-alibaba-nacos-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+server:
+  port: 8098
