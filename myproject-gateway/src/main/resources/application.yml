@@ -1,0 +1,17 @@
+
+spring:
+  application:
+    name: myproject-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: gateway_route
+        uri: lb://myproject-discovery
+        predicates: # 使用 http://desktop-hk234ra:8091/discovery/hello/hello 访问代理地址
+        - Path=/discovery/hello/**
+server:
+  port: 8091
+eureka:
+  client:
+    service-url:
+     defaultZone: http://localhost:8761/eureka/ #注册中心地址

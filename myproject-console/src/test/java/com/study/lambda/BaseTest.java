@@ -276,5 +276,28 @@ public class BaseTest {
 
     }
 
+    @Test
+    public void test14() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+        //计算求和
+        System.out.println(list.stream().reduce(Integer::sum).toString());
+
+        ArrayList<Integer> lists = new ArrayList<>();
+        Integer result = lists.stream().reduce(0, Integer::sum);
+        System.out.println(result);
+
+    }
+
+    @Test
+    public void test15() {
+        List<String> words = Arrays.asList("Hello", "World");
+        List<String> list = words.stream()
+                .map(word -> word.split("")) //每个单词都是返回一个数组
+                .flatMap(Arrays::stream)
+                .collect(Collectors.toList());
+
+        System.out.println(list);
+
+    }
 
 }

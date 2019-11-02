@@ -20,6 +20,8 @@
         <module>myproject-zuul</module>
         <module>myproject-alibaba-nacos-server</module>
         <module>myproject-alibaba-nacos-config</module>
+        <module>myproject-gateway</module>
+        <module>myproject-security</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -131,7 +133,6 @@
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
                 <version>${spring-cloud-openfeign.version}</version>
             </dependency>
-
             <!--mybatis-->
             <dependency>
                 <groupId>tk.mybatis</groupId>
