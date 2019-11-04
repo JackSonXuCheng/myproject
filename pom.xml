@@ -22,6 +22,7 @@
         <module>myproject-alibaba-nacos-config</module>
         <module>myproject-gateway</module>
         <module>myproject-security</module>
+        <module>myproject-security-oauth</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -1,0 +1,12 @@
+security:
+  oauth2:
+    client:
+      user-authorization-uri: http://localhost:8080/oauth/authorize
+      access-token-uri: http://localhost:8080/oauth/token
+      client-secret: app-secret
+      client-id: app
+    resource:
+      token-info-uri: http://localhost:8080/oauth/check_token
+
+server:
+  port: 8081
