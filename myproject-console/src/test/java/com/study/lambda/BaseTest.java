@@ -2,6 +2,7 @@ package com.study.lambda;
 
 import com.study.entity.Person;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Test;
 
 import java.io.*;
@@ -297,6 +298,30 @@ public class BaseTest {
                 .collect(Collectors.toList());
 
         System.out.println(list);
+
+    }
+
+    @Test
+    public void test16() {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("id");
+        list.add("name");
+        list.add("sex");
+        list.add("column");
+        list.add("time");
+        list.add("gender");
+        list.add("title");
+        list.add("content");
+        list.add("term");
+        list.add("class");
+        int size = list.size();
+        int nextInt = RandomUtils.nextInt(9);
+        System.out.println(nextInt);
+        size = (size + nextInt) > size ? size : (size + nextInt);
+
+        int i = RandomUtils.nextInt(size);
+        String s = list.get(i);
+        System.out.println(s);
 
     }
 

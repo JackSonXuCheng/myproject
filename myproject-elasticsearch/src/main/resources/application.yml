@@ -1,0 +1,6 @@
+
+spring:
+  data:
+    elasticsearch:
+      cluster-name: myproject-elasticsearch
+      cluster-nodes: 192.168.50.126:9300

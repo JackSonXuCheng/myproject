@@ -23,6 +23,7 @@
         <module>myproject-gateway</module>
         <module>myproject-security</module>
         <module>myproject-security-oauth</module>
+        <module>myproject-elasticsearch</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -72,9 +73,6 @@
         <apache.httpclient.version>4.3.4</apache.httpclient.version>
         <apache.httpmime.version>4.3.4</apache.httpmime.version>
         <apache.httpcore.version>4.4.1</apache.httpcore.version>
-        <httpclient.version>4.3.4</httpclient.version>
-        <httpmime.version>4.3.4</httpmime.version>
-        <httpcore.version>4.4.1</httpcore.version>
 
         <shiro.version>1.4.0</shiro.version>
         <shiro.redis.version>2.4.14</shiro.redis.version>
