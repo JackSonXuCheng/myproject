@@ -1,12 +1,12 @@
 package com.myproject.mq.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -20,6 +20,8 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitmqConfig {
 
     public static final String ROUTING_KEY1 = "topic.key1";
+
+    public static final String DELAY_KEY = "delay.key";
 
     @Bean("queue")
     public Queue createQueue() {
@@ -45,4 +47,28 @@ public class RabbitmqConfig {
 
     }
 
+    /**
+     * 延时消息队列
+     *
+     * @return
+     */
+
+    @Bean("delayQueue")
+    public Queue delayQueue() {
+        return new Queue("delayQueue");
+    }
+
+
+    @Bean
+    public CustomExchange delayExchange() {
+        Map<String, Object> map = new HashMap<>(1);
+        map.put("x-delayed-type", "direct");
+
+        return new CustomExchange("test_exchange", "x-delayed-message", true, false, map);
+    }
+
+    @Bean
+    public Binding delayBinding(Queue delayQueue, CustomExchange customExchange) {
+        return BindingBuilder.bind(delayQueue).to(customExchange).with(DELAY_KEY).noargs();
+    }
 }

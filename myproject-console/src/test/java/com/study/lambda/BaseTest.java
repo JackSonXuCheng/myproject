@@ -264,8 +264,13 @@ public class BaseTest {
         Long l = 1l;
         Long s = 1l;
         Objects.equals(l, s);
+
         System.out.println(l.equals(s));
 
+        long st = 2l;
+        int str = 2;
+        System.out.println(Objects.equals(st, str)); //false
+        System.out.println(st == str);    //true
 
     }
 

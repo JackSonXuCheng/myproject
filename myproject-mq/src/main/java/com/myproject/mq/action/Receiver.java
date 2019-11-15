@@ -23,7 +23,7 @@ public class Receiver {
 
     @RabbitListener(queues = "topicQueue")
     public void receiveTopic(String message, String s) {
-        log.info("接收信息" + message);
+        log.info("接收订阅信息" + message);
 
     }
 }

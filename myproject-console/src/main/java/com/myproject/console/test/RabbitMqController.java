@@ -1,5 +1,6 @@
 package com.myproject.console.test;
 
+import com.myproject.mq.action.DelaySender;
 import com.myproject.mq.action.Sender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ public class RabbitMqController {
     @Autowired
     private Sender sender;
 
+    @Autowired
+    private DelaySender delaySender;
     @GetMapping("hello")
     public String hello() {
         sender.send();
@@ -26,5 +29,10 @@ public class RabbitMqController {
         return "success";
     }
 
+    @GetMapping("delayHello")
+    public String delayHello() {
 
+        delaySender.delaySender();
+        return "success";
+    }
 }
